@@ -30,7 +30,7 @@ namespace Clique.Controllers
         {
             
             threadCollection.InsertOne(t);
-            return "thank you tashfiq and ahnaf";
+            return "Thank you for posting a new thread";
         }
     }
 

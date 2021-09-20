@@ -1,3 +1,7 @@
+using System;
+using System.Text;
+using Clique.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,6 +9,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 
 namespace Clique
@@ -33,6 +38,31 @@ namespace Clique
             {
                 configuration.RootPath = "ClientApp/build";
             });
+            // injecting the service classes
+            services.AddScoped<IBlogService, BlogService>();
+
+            // Adding Authentication  
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+
+            // Adding Jwt Bearer  
+            .AddJwtBearer(options =>
+              {
+                  options.SaveToken = true;
+                  options.RequireHttpsMetadata = false;
+                  options.TokenValidationParameters = new TokenValidationParameters()
+                  {
+                      ValidateIssuer = false,
+                      ValidateIssuerSigningKey = true,
+                      ValidateAudience = false,
+                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"])),
+                      ClockSkew = TimeSpan.Zero,
+                      ValidateLifetime = true
+                  };
+              });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

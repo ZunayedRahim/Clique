@@ -13,7 +13,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import man from '../images/man.jpg';
 import logo from '../images/clique_logo.PNG';
 import { Link } from 'react-router-dom'
-
+import axios from "axios"
 const useStyles = makeStyles((theme) => ({
     root: {
       height: '100vh',
@@ -66,9 +66,11 @@ function Signin()
     const classes = useStyles();
     const [title,setTitle] = useState('')
     const [details,setDetails] = useState('')
+    const [email,setEmail] = useState('')
+    const [pass,setPass] = useState('')
     const [titleError,setTitleError] = useState(false)
     const [detailsError,setDetailsError] = useState(false)
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault()
         setTitleError(false)
         setDetailsError(false)
@@ -86,6 +88,17 @@ function Signin()
         {
             console.log(title,details)
         }
+
+        console.log("here")
+        console.log(email,pass)
+        const{data}= await axios.post("https://localhost:5001/user/login",{
+          email: title,
+          password: details,
+        });
+
+        console.log(data);
+
+
     }
     return(
         <Grid container component="main" className={classes.root}>

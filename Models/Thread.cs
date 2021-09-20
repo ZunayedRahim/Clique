@@ -10,7 +10,10 @@ namespace Clique.Models
         [BsonRepresentation(BsonType.ObjectId)]
        public string Id { get; set; }
         [BsonElement("title")]
+        [Required]
+        [StringLength(50, ErrorMessage = "Must be between 5 and 50 characters", MinimumLength = 5)]
        public string Title { get; set; }
+       
         [BsonElement("description")]
        public string Description { get; set; }
         [BsonElement("image_src")]

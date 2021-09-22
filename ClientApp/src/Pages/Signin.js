@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import man from '../images/man.jpg';
 import logo from '../images/clique_logo.PNG';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import axios from "axios"
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -68,6 +68,7 @@ function Signin()
     const [details,setDetails] = useState('')
     const [email,setEmail] = useState('')
     const [pass,setPass] = useState('')
+    const history=useHistory();
     const [titleError,setTitleError] = useState(false)
     const [detailsError,setDetailsError] = useState(false)
     const handleSubmit = async (e) =>{
@@ -97,6 +98,8 @@ function Signin()
         });
 
         console.log(data);
+        history.push("/LandingPage")
+
 
 
     }
@@ -144,11 +147,15 @@ function Signin()
               type="submit"
               fullWidth
               variant="contained"
-              
+              component={Link}
+              to={"/LandingPage"}
               className={classes.submit}
             >
               Sign In
             </Button>
+
+           
+
             <Grid container spacing={24} justify="center">
               <Grid item xs={6} align="center">
                 <Link to={"/ForgotPassword"}>

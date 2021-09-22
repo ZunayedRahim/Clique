@@ -1,0 +1,10 @@
+body{
+    background-color:#f2f2f2;
+}
+
+.homeContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}

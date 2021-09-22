@@ -32,5 +32,8 @@ namespace Clique.Models
        public string Comment_id { get; set; }
         [BsonElement("report_count")]
        public int Report_count { get; set; }
+
+        
+        
     }
 }

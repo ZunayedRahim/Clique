@@ -52,6 +52,7 @@ namespace Clique.Service
             else
             {
                 user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, BCrypt.Net.BCrypt.GenerateSalt(12));
+                user.ConfirmPassword = BCrypt.Net.BCrypt.HashPassword(user.ConfirmPassword, BCrypt.Net.BCrypt.GenerateSalt(12));
                 _userCollection.InsertOne(user);
 
                 return new Payload {StatusCode = 200, StatusDescription = "User created successfully"};

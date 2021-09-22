@@ -19,6 +19,7 @@ namespace Clique.Controllers
         }
 
         [HttpGet]
+        
         public IEnumerable<Thread> Get()
         {  
             return threadCollection.Find(s=>true).ToList();

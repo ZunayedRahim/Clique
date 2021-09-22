@@ -12,8 +12,8 @@ import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import popcorn from '../images/popcorn.png';
 import logo from '../images/clique_logo.PNG';
-import { Link } from 'react-router-dom'
-
+import { Link , useHistory} from 'react-router-dom'
+import axios from "axios"
 const useStyles = makeStyles((theme) => ({
     root: {
       height: '100vh',
@@ -70,12 +70,12 @@ function Signup()
     const [pass,setPass] = useState('')
     const [confpass,setConfpass] = useState('')
 
-
+    const history=useHistory();
     const [usernameError,setUsernameError] = useState(false)
     const [emailError,setEmailError] = useState(false)
     const [passError,setPassError] = useState(false)
     const [confpassError,setconfpassError] = useState(false)
-    const handleSubmit = (e) =>{
+    const handleSubmit = async(e) =>{
         e.preventDefault()
         setUsernameError(false)
         setEmailError(false)
@@ -104,8 +104,29 @@ function Signup()
         
         if(username && email && pass && confpass)
         {
+          if(pass==confpass)
+          {
+            setPassError(false)
+            setconfpassError(false)
+            console.log(username,email,pass)
+            const{data}= await axios.post("https://localhost:5001/user/register",{
+              username: username,
+              email: email,
+              password: pass,
+              confirmpassword: confpass
+            });
+    
+            console.log(data);
+            history.push("/")
+          }
+          else{
+            setPassError(true)
+            setconfpassError(true)
+          }
             console.log(username,email)
         }
+
+     
     }
     return(
         <Grid container component="main" className={classes.root}>

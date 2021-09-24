@@ -1,9 +1,10 @@
-import Post from "../components/Post";
+import Post from "../Post/Post";
 import React, { useEffect } from 'react'
 import axios from "axios"
 import "./feed.css";
 import Grid from '@material-ui/core/Grid';
-import Sort from "./Sort";
+import Sort from "../Sort/Sort";
+
 
 export default function Feed() {
     const [loading, setLoading] = React.useState(true);

@@ -6,14 +6,16 @@ import Signup from './Pages/Signup'
 import ForgotPass from './Pages/ForgotPassword'
 import NotFound from './Pages/NotFound'
 import Landing from './Pages/LandingPage'
-import Topbar from './components/Topbar'
 import NewPost from './Pages/NewPost'
+import PrivatePage from './Pages/PrivatePage'
+import InsidePost from './Pages/InsidePost'
 import {BrowserRouter as Router,
   Route,
   Switch,
   Link,
   Redirect,
   BrowserRouter} from "react-router-dom"
+import LandingPage from './Pages/LandingPage';
 
 
 class App extends Component{
@@ -21,11 +23,13 @@ class App extends Component{
     return <BrowserRouter>
     <Router>
       <Switch>
-      <Route exact path="/" component={Signin}></Route>
+      <Route exact path="/" component={LandingPage}></Route>
       <Route exact path="/Signup" component={Signup}></Route>
       <Route exact path="/ForgotPassword" component={ForgotPass}></Route>
-      <Route exact path="/LandingPage" component={Landing}></Route>
+      <Route exact path="/Signin" component={Signin}></Route>
       <Route exact path="/NewPost" component={NewPost}></Route>
+      <Route exact path="/PrivatePage" component={PrivatePage}></Route>
+      <Route exact path="/InsidePost" component={InsidePost}></Route>
       <Route component={NotFound}></Route>
       <Redirect to ="/NotFound" />
       </Switch>

@@ -1,5 +1,5 @@
 .topbarContainer {
-    height: 80px;
+    height: 60px;
     width: 100%;
     background-color: white;
     display: flex;
@@ -10,7 +10,7 @@
   }
   
   .topbarLeft {
-    flex: 4;
+    flex: 2;
   }
   
   .logo {
@@ -23,7 +23,7 @@
   }
   
   .topbarCenter {
-    flex: 5;
+    flex: 4;
   }
   
   .searchbar {
@@ -33,7 +33,7 @@
     border-radius: 10px;
     display: flex;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 0px;
   }
   
   .searchIcon {
@@ -52,7 +52,7 @@
   }
   
   .topbarRight {
-    flex: 4;
+    flex: 2;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -62,17 +62,23 @@
   
   .topbarLink {
     margin-right: 10px;
-    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
-    background-color: white;
+    padding: 0.5em 2.1em 0.5em;
+    background-color: black;
+    color: white;
     border: 1px;
-    border-radius: 10px;
+    border-radius: 5px;
     border-color: red;
-    margin-top: 20px;
+   
+    font-family:sans-serif;
+  
+
   }
+  
   .topbarLinks {
     
-    margin-top: 10px;
+    margin-top: 0px;
   }
   .submit {
    
@@ -118,5 +124,5 @@
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
-    margin-top: 8px;
+    margin-top: 0px;
   }

@@ -88,17 +88,18 @@ function Signin()
         if(title && details)
         {
             console.log(title,details)
+             console.log("here")
+             console.log(email,pass)
+             const{data}= await axios.post("https://localhost:5001/user/login",{
+               email: title,
+               password: details,
+             });
+    
+             console.log(data);
+             history.push("/PrivatePage")
         }
 
-        console.log("here")
-        console.log(email,pass)
-        const{data}= await axios.post("https://localhost:5001/user/login",{
-          email: title,
-          password: details,
-        });
-
-        console.log(data);
-        history.push("/LandingPage")
+       
 
 
 
@@ -147,8 +148,6 @@ function Signin()
               type="submit"
               fullWidth
               variant="contained"
-              component={Link}
-              to={"/LandingPage"}
               className={classes.submit}
             >
               Sign In

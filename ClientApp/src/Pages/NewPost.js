@@ -149,7 +149,7 @@ function NewPost()
           }
           );
           console.log(data);
-          history.push("/LandingPage")
+          history.push("/PrivatePage")
 
         // try {
         //   var formData = new FormData();

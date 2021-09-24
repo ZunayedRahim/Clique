@@ -1,17 +1,18 @@
-import "./post.css";
+import "./postPrivate.css";
+
 import { MoreVert } from "@material-ui/icons";
-import profilepic from '../images/reaper.png';
+import profilepic from '../../../images/reaper.png';
 import { useState } from "react";
-import man from '../images/man.jpg';
-import upvote from '../images/upvote.png';
-import downvote from '../images/down.png';
+import man from '../../../images/man.jpg';
+import upvote from '../../../images/upvote.png';
+import downvote from '../../../images/down.png';
 
 
 export default function Post( post ) {
   
   return (
       
-    <div className="post">
+    <div className="postPrivate">
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
@@ -22,15 +23,25 @@ export default function Post( post ) {
             />
             <span className="postUsername">
               {post.title}
+              
             </span>
-            <span className="postDate"> 12/2/21</span>
+            
+            <span className="postDate"> 24 September,2021, 1:33pm</span>
           </div>
           <div className="postTopRight">
             <MoreVert />
           </div>
+      
         </div>
+        <div className="postTopDown">
+        <span className="postCommunity">
+              c/keeanureeves
+              
+            </span>
+        </div>
+        
         <div className="postCenter">
-          <span className="postText"> {post.description}</span>
+          <div className="postText"> {post.description}</div>
           <img className="postImg" src={post.image} alt="" />
         </div>
          <div className="postBottom">

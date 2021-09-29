@@ -1,4 +1,4 @@
-import "./post.css";
+import "./community.css";
 import { MoreVert } from "@material-ui/icons";
 import profilepic from '../../../images/reaper.png';
 import { useState } from "react";
@@ -7,30 +7,30 @@ import downvote from '../../../images/down.png';
 import { Link, useHistory } from 'react-router-dom'
 import add from '../../../images/add.png';
 
-export default function Post( post ) {
+export default function Community( post ) {
   const history=useHistory();
-  const gotopost = async (e) =>{
+  const gotologin = async (e) =>{
     e.preventDefault()
-    history.push("/InsidePost");
+    history.push("/Signin");
    
 
 
 }
-const gotologin = async (e) =>{
+const gotocommunity = async (e) =>{
   e.preventDefault()
-  history.push("/Signin");
+  history.push("/CommunityDetails");
  
 
 
 }
   return (
       
-    <div className="postLanding" >
+    <div className="postLandingC" >
       <div className="postWrapper">
-        <div className="postTop">
+        <div className="postTopC">
           <div className="postTopLeft">
             <img
-              className="postProfileImg"
+              className="postProfileImgC"
               src={profilepic}
               alt=""
             />
@@ -39,11 +39,11 @@ const gotologin = async (e) =>{
               
             </span>
             
-            <span className="postDate"> 24 September,2021, 1:33pm</span>
+            
           </div>
           <div className="postTopRight">
           <img
-              className="postProfileImg"
+              className="addImg"
               src={add}
               alt=""
               onClick={gotologin}
@@ -51,28 +51,18 @@ const gotologin = async (e) =>{
           </div>
       
         </div>
-        <div className="postTopDown">
+        <div className="postTopDownC" onClick={gotocommunity}>
         <span className="postCommunity">
               c/keeanureeves
               
             </span>
         </div>
         
-        <div className="postCenter" onClick={gotopost}>
+        <div className="postCenter" onClick={gotocommunity}>
           <div className="postText"> {post.description}</div>
-          <img className="postImg" src={post.image} alt="" />
+         
         </div>
-         <div className="postBottom">
-          <div className="postBottomLeft">
-            <img className="likeIcon" src={upvote} alt="" />
-            <span className="postLikeCounter">{post.upvote}</span>
-            <img className="likeIcon" src={downvote}  alt=""/>
-            <span className="postLikeCounter">{post.downvote}</span>
-          </div>
-          <div className="postBottomRight">
-            <span className="postCommentText">{post.comment} comments</span>
-          </div>
-        </div> 
+         
       </div>
     </div>
   );

@@ -9,6 +9,8 @@ import Landing from './Pages/LandingPage'
 import NewPost from './Pages/NewPost'
 import PrivatePage from './Pages/PrivatePage'
 import InsidePost from './Pages/InsidePost'
+import SeeCommunities from './Pages/SeeCommunities'
+import CommunityDetails from './Pages/CommunityDetails'
 import {BrowserRouter as Router,
   Route,
   Switch,
@@ -30,6 +32,8 @@ class App extends Component{
       <Route exact path="/NewPost" component={NewPost}></Route>
       <Route exact path="/PrivatePage" component={PrivatePage}></Route>
       <Route exact path="/InsidePost" component={InsidePost}></Route>
+      <Route exact path="/SeeCommunities" component={SeeCommunities}></Route>
+      <Route exact path="/CommunityDetails" component={CommunityDetails}></Route>
       <Route component={NotFound}></Route>
       <Redirect to ="/NotFound" />
       </Switch>

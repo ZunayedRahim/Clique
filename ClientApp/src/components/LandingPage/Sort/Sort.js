@@ -8,7 +8,7 @@ import {  useHistory } from 'react-router-dom'
 export default function Sort() {
     const history=useHistory();
     function createpost(){
-        history.push("/NewPost")
+        history.push("/SeeCommunities")
 
     }
   return (

@@ -12,6 +12,7 @@ class Topbar extends Component{
     logout=(e)=>{
 
     const { history } = this.props;
+    localStorage.clear();
     history.push('/Signin');
    }
    

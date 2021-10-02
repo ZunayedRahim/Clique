@@ -4,7 +4,7 @@ import axios from "axios"
 import "./feed.css";
 import Grid from '@material-ui/core/Grid';
 import Sort from "../Sort/Sort";
-
+import { GET, GET_AUTH } from "../../../api/api";
 export default function Feed() {
     const [loading, setLoading] = React.useState(true);
   const [posts, setPosts] = React.useState([]);
@@ -21,7 +21,7 @@ export default function Feed() {
     setLoading(false);
     const exe = async () => {
       try {
-        const { data } = await axios.get("https://localhost:5001/thread");
+        const { data } = await GET("thread");
         console.log(data);
         setPosts(data);
         setLoading(false);

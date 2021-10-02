@@ -8,12 +8,15 @@ import NotFound from './Pages/NotFound'
 import Landing from './Pages/LandingPage'
 import Topbar from './components/Topbar'
 import NewPost from './Pages/NewPost'
+import UserProfile from './Pages/UserProfile'
+import UserProfileEdit from './Pages/UserProfileEdit';
 import {BrowserRouter as Router,
   Route,
   Switch,
   Link,
   Redirect,
   BrowserRouter} from "react-router-dom"
+
 
 
 class App extends Component{
@@ -26,6 +29,8 @@ class App extends Component{
       <Route exact path="/ForgotPassword" component={ForgotPass}></Route>
       <Route exact path="/LandingPage" component={Landing}></Route>
       <Route exact path="/NewPost" component={NewPost}></Route>
+      <Route exact path="/UserProfile" component={UserProfile}></Route>
+      <Route exact path="/UserProfileEdit" component={UserProfileEdit}></Route>
       <Route component={NotFound}></Route>
       <Redirect to ="/NotFound" />
       </Switch>

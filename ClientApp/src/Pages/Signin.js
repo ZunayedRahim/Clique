@@ -14,6 +14,7 @@ import man from '../images/man.jpg';
 import logo from '../images/clique_logo.PNG';
 import { Link, useHistory } from 'react-router-dom'
 import axios from "axios"
+import { POST } from '../api/api'
 const useStyles = makeStyles((theme) => ({
     root: {
       height: '100vh',
@@ -90,12 +91,18 @@ function Signin()
             console.log(title,details)
              console.log("here")
              console.log(email,pass)
-             const{data}= await axios.post("https://localhost:5001/user/login",{
+             const{data}= await POST("user/login",{
                email: title,
                password: details,
              });
     
              console.log(data);
+             if(data.statusCode===200)
+             {
+              localStorage.setItem("access_token", data.statusDescription);
+              console.log("access token setting");
+              //window.location.href = "/";
+             }
              history.push("/PrivatePage")
         }
 

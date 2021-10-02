@@ -4,6 +4,7 @@ import axios from "axios"
 import "./feed.css";
 import Grid from '@material-ui/core/Grid';
 import Sort from "../Sort/Sort";
+import { GET_AUTH } from "../../../api/api";
 
 
 export default function Feed() {
@@ -22,7 +23,7 @@ export default function Feed() {
     setLoading(false);
     const exe = async () => {
       try {
-        const { data } = await axios.get("https://localhost:5001/thread");
+        const { data } = await GET_AUTH("thread/privatethread");
         console.log(data);
         setPosts(data);
         setLoading(false);

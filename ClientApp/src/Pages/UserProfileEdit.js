@@ -4,23 +4,22 @@ import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button';
-import Radio from '@material-ui/core/Radio';
-
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import popcorn from '../images/popcorn.png';
-import logo from '../images/clique_logo.PNG';
 import { Link , useHistory} from 'react-router-dom'
-import axios from "axios"
+import CssBaseline from '@material-ui/core/CssBaseline';
+import profilepic from '../images/profilepic.png';
+import logo from '../images/clique_logo.PNG';
+//import { Link , useHistory} from 'react-router-dom'
+//import axios from "axios"
 const useStyles = makeStyles((theme) => ({
     root: {
       height: '100vh',
       backgroundColor: "white",
     },
     image: {
-        backgroundImage: `url(${popcorn})`,
+      backgroundImage: `url(${profilepic})`,
       backgroundRepeat: 'no-repeat',
       backgroundColor: "white",
    
@@ -39,15 +38,15 @@ const useStyles = makeStyles((theme) => ({
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),
     },
-    submit: {
+    save: {
       margin: theme.spacing(3, 0, 2),
       backgroundColor: "#000000",
       color: "white",
       height: 50,
       borderRadius: 10,
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor: '#000000',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#000000',
       '&:hover' : {
         color: "red",
         backgroundColor: "#000000",
@@ -56,32 +55,48 @@ const useStyles = makeStyles((theme) => ({
 
     },
 
-    signupstyle: {
+    userprofileEditstyle: {
         fontFamily: "Lato",
     }
   }));
   
 
-function Signup()
+function UserProfileEdit()
 {
     const classes = useStyles();
+    const [firstname,setFirstname] = useState('')
+    const [lastname,setLastname] = useState('')
     const [username,setUsername] = useState('')
     const [email,setEmail] = useState('')
-    const [pass,setPass] = useState('')
-    const [confpass,setConfpass] = useState('')
+    const [birthdate,setBirthdate] = useState('')
+    const [description,setDescription] = useState('')
 
-    const history=useHistory();
+    //const history=useHistory();
+    const [firstnameError,setFirstnameError] = useState(false)
+    const [lastnameError,setLastnameError] = useState(false)
     const [usernameError,setUsernameError] = useState(false)
     const [emailError,setEmailError] = useState(false)
-    const [passError,setPassError] = useState(false)
-    const [confpassError,setconfpassError] = useState(false)
+    const [birthdateError,setBirthdateError] = useState(false)
+    const [descriptionError,setDescriptionError] = useState(false)
+    
     const handleSubmit = async(e) =>{
         e.preventDefault()
         setUsernameError(false)
         setEmailError(false)
-        setPassError(false)
-        setconfpassError(false)
+        setFirstnameError(false)
+        setLastnameError(false)
+        setBirthdateError(false)
+        setDescriptionError(false)
+        
 
+        if(firstname=='')
+        {
+            setFirstnameError(true)
+        }
+        if(lastname=='')
+        {
+            setLastnameError(true)
+        }
         if(username=='')
         {
             setUsernameError(true)
@@ -91,38 +106,18 @@ function Signup()
             setEmailError(true)
             
         }
-        if(pass=='')
+        if(birthdate=='')
         {
-            setPassError(true)
+            setBirthdateError(true)
         }
-   
-        if(confpass=='')
+        if(description=='')
         {
-            setconfpassError(true)
-            
+            setDescriptionError(true)
         }
+       
         
-        if(username && email && pass && confpass)
+        if(username && email)
         {
-          if(pass==confpass)
-          {
-            setPassError(false)
-            setconfpassError(false)
-            console.log(username,email,pass)
-            const{data}= await axios.post("https://localhost:5001/user/register",{
-              username: username,
-              email: email,
-              password: pass,
-              confirmpassword: confpass
-            });
-    
-            console.log(data);
-            history.push("/")
-          }
-          else{
-            setPassError(true)
-            setconfpassError(true)
-          }
             console.log(username,email)
         }
 
@@ -136,10 +131,38 @@ function Signup()
             <div className={classes.paper}>
             <img src={logo} alt="Logo" />
             <Typography variant="h3" component="h2" gutterBottom className={classes.signupstyle}>
-                 Sign Up
+                 User Profile
             </Typography>
 
             <form className={classes.form} noValidate onSubmit={handleSubmit}>
+            <TextField
+              onChange={(e) =>setFirstname(e.target.value)}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Firstname"
+              name="firstname"
+              autoComplete="email"
+              autoFocus
+              error={firstnameError}
+           
+            />
+            <TextField
+              onChange={(e) =>setLastname(e.target.value)}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Lastname"
+              name="lastname"
+              autoComplete="email"
+              autoFocus
+              error={lastnameError}
+           
+            />
             <TextField
               onChange={(e) =>setUsername(e.target.value)}
               variant="outlined"
@@ -169,51 +192,45 @@ function Signup()
            
             />
             <TextField
-             onChange={(e) =>setPass(e.target.value)}
+              onChange={(e) =>setBirthdate(e.target.value)}
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              error={passError}
+              //id="email"
+              label="Birthdate"
+              name="birthdate"
+              //autoComplete="email"
+              autoFocus
+              error={birthdateError}
+           
             />
             <TextField
-             onChange={(e) =>setConfpass(e.target.value)}
+              onChange={(e) =>setDescription(e.target.value)}
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="confirm_password"
-              label="Confirm Password"
-              type="password"
-              id="confirm_password"
-              autoComplete="current-password"
-              error={confpassError}
+              //id="email"
+              label="Description"
+              name="description"
+              //autoComplete="email"
+              autoFocus
+              error={descriptionError}
+           
             />
+            
 
              <Button
-              type="submit"
+              type="save"
               fullWidth
               variant="contained"
               
-              className={classes.submit}
+              className={classes.save}
             >
-              Sign Up
+              Save
             </Button>
-            <Grid container spacing={24} justify="center">
             
-              <Grid item xs={4}>
-                  
-                <Link to={"/"} >
-                  Already have an account? 
-                </Link>
-               
-              </Grid>
-            </Grid>
             </form>
             </div>
             </Grid>
@@ -222,4 +239,4 @@ function Signup()
 
     ) 
 }
-export default Signup
+export default UserProfileEdit

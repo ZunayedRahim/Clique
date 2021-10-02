@@ -1,9 +1,10 @@
-import Post from "../components/Post";
+import Post from "../Post/Post";
 import React, { useEffect } from 'react'
 import axios from "axios"
 import "./feed.css";
 import Grid from '@material-ui/core/Grid';
-import Sort from "./Sort";
+import CommunityDetail from "../CommunityDetails/CommunityDetail";
+
 
 export default function Feed() {
     const [loading, setLoading] = React.useState(true);
@@ -41,7 +42,13 @@ export default function Feed() {
   return (
     <div className="feed">
       <div className="feedWrapper">
-      <Sort/>
+      <CommunityDetail
+                    
+                    title="This is the title of the community"
+                    description="Community details Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet malesuada leo, ac aliquet nulla. Nulla eu nunc quis neque luctus tincidunt. Etiam eget justo eu lacus aliquet aliquet sed id sapien. Aenean hendrerit, lacus non venenatis tincidunt, magna quam blandit nulla, nec imperdiet ante est eget leo. Ut sed tellus nibh. Nullam volutpat fermentum ipsum, ut porta nisl sagittis quis. Morbi at rhoncus tortor, eget pellentesque lacus."
+                    
+                    
+                  />
        {posts.map((post) => (
                
                   <Post

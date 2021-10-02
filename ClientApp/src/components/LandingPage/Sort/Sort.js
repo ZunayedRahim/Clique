@@ -1,14 +1,14 @@
 import React from 'react'
 import "./sort.css";
-import New from '../images/trending-topic.png'
-import Trend from '../images/trend.png'
-import Top from '../images/arrow-up.png'
+import New from '../../../images/sticker.png'
+import Trend from '../../../images/trend.png'
+import Top from '../../../images/arrow-up.png'
 import {  useHistory } from 'react-router-dom'
 
 export default function Sort() {
     const history=useHistory();
     function createpost(){
-        history.push("/NewPost")
+        history.push("/SeeCommunities")
 
     }
   return (
@@ -30,7 +30,7 @@ export default function Sort() {
               </div>
               
           </div>
-          <button className="addButton" onClick={createpost}>Create post</button>
+          <button className="addButton" onClick={createpost}>See Communities</button>
       </div>
     </div>
   </div>

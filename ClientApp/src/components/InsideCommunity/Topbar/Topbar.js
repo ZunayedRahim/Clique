@@ -3,19 +3,21 @@ import './topbar.css'
 import { Search, Person, Chat, Notifications } from "@material-ui/icons"
 import { Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import profilepic from '../images/reaper.png';
-import logo from '../images/clique_logo_resize.png';
-import {useHistory} from 'react-router-dom'
+import profilepic from '../../../images/reaper.png';
+import logo from '../../../images/clique_logo_resize.png';
+import { withRouter } from 'react-router-dom'
 
 class Topbar extends Component{
 
-  // handleLogout=(e)=>{
+    logout=(e)=>{
 
-  //   const history = useHistory();
-  // }
+    const { history } = this.props;
+    history.push('/Signin');
+   }
+   
     render() {
-
-      
+      const { history } = this.props;
+       
 
   return <div className='topbarContainer'>
     <div className="topbarLeft">
@@ -25,15 +27,16 @@ class Topbar extends Component{
       <div className="searchbar">
         <Search className="searchIcon" />
         <input
-          placeholder="Search for friend, post or video"
+          placeholder="Search for communities"
           className="searchInput"
         />
       </div>
     </div>
     <div className="topbarRight">
     <div className="topbarLinks">
-          <span className="topbarLink" >Logout</span>
-          <span className="topbarLink">    Communities</span>
+
+          
+          <button className="topbarLink" onClick={this.logout}>Logout</button>
         </div>
       
       <img src={profilepic} alt="" className="topbarImg"/>
@@ -42,4 +45,4 @@ class Topbar extends Component{
   
 }
 }
-export default Topbar;
+export default withRouter(Topbar);

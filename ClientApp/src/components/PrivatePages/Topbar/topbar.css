@@ -1,0 +1,128 @@
+.topbarContainer {
+    height: 60px;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+  
+  .topbarLeft {
+    flex: 2;
+  }
+  
+  .logo {
+    width: 40%;
+    height: auto;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+   
+  }
+  
+  .topbarCenter {
+    flex: 4;
+  }
+  
+  .searchbar {
+    width: 100%;
+    height: 40px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    margin-top: 0px;
+  }
+  
+  .searchIcon {
+    font-size: 20px !important;
+    margin-left: 10px;
+  }
+  
+  .searchInput {
+    border: none;
+    width: 70%;
+    background-color: #f2f2f2;
+  }
+  
+  .searchInput:focus {
+    outline: none;
+  }
+  
+  .topbarRight {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: black;
+    ;
+  }
+  
+  .topbarLink {
+    margin-right: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.5em 2.1em 0.5em;
+    background-color: black;
+    color: white;
+    border: 1px;
+    border-radius: 5px;
+    border-color: red;
+   
+    font-family:sans-serif;
+  
+
+  }
+  
+  .topbarLinks {
+    
+    margin-top: 0px;
+  }
+  .submit {
+   
+    background-color: "#000000";
+    color: "white";
+    height: 50;
+    border-radius: 10;
+  border-width: 1;
+  border-style: 'solid';
+  border-color: '#000000';
+   
+
+  }
+  
+  .topbarIcons {
+    display: flex;
+  }
+  
+  .topbarIconItem {
+    margin-right: 15px;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .topbarIconBadge {
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+  
+  .topbarImg {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    margin-top: 0px;
+  }

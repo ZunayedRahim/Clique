@@ -1,9 +1,11 @@
 using System;
 using System.Text;
+using Clique.Helpers;
 using Clique.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +35,7 @@ namespace Clique
             });
             services.AddControllersWithViews();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // used for injecting the HttpContext into the controllers
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -84,7 +87,10 @@ namespace Clique
             app.UseSpaStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -7,11 +7,19 @@ import ForgotPass from './Pages/ForgotPassword'
 import NotFound from './Pages/NotFound'
 import Landing from './Pages/LandingPage'
 import NewPost from './Pages/NewPost'
+
+import UserProfile from './Pages/UserProfile'
+import UserProfileEdit from './Pages/UserProfileEdit';
+
 import PrivatePage from './Pages/PrivatePage'
 import InsidePost from './Pages/InsidePost'
 import SeeCommunities from './Pages/SeeCommunities'
 import CommunityDetails from './Pages/CommunityDetails'
+
 import CreateCommunity from './Pages/CreateCommunity'
+
+
+
 import {BrowserRouter as Router,
   Route,
   Switch,
@@ -19,6 +27,7 @@ import {BrowserRouter as Router,
   Redirect,
   BrowserRouter} from "react-router-dom"
 import LandingPage from './Pages/LandingPage';
+
 
 
 class App extends Component{
@@ -31,11 +40,19 @@ class App extends Component{
       <Route exact path="/ForgotPassword" component={ForgotPass}></Route>
       <Route exact path="/Signin" component={Signin}></Route>
       <Route exact path="/NewPost" component={NewPost}></Route>
+
+      <Route exact path="/UserProfile" component={UserProfile}></Route>
+      <Route exact path="/UserProfileEdit" component={UserProfileEdit}></Route>
+
       <Route exact path="/PrivatePage" component={PrivatePage}></Route>
       <Route exact path="/InsidePost" component={InsidePost}></Route>
       <Route exact path="/SeeCommunities" component={SeeCommunities}></Route>
       <Route exact path="/CommunityDetails" component={CommunityDetails}></Route>
+
       <Route exact path="/CreateCommunity" component={CreateCommunity}></Route>
+
+
+
       <Route component={NotFound}></Route>
       <Redirect to ="/NotFound" />
       </Switch>

@@ -14,6 +14,7 @@ import man from '../images/rsz_createpost.jpg';
 import logo from '../images/clique_logo.PNG';
 import { Link, useHistory } from 'react-router-dom'
 import axios from "axios"
+import { POST_AUTH } from '../api/api'
 const useStyles = makeStyles((theme) => ({
     root: {
       height: '100vh',
@@ -133,7 +134,7 @@ function NewPost()
         // form.imageURL = file;
         // console.log(form);
         console.log(titlein,detailsin);
-        const { data } = await axios.post("https://localhost:5001/thread/add", 
+        const { data } = await POST_AUTH("thread/add", 
           {
             title: titlein,
             description: detailsin,
@@ -141,8 +142,6 @@ function NewPost()
             upvote: 0,
             downvote : 0,
             totalVote : 0,
-            oP_id : "123123",
-            oP_name : "nafisha",
             comment_id : "232323",
             report_count: 0, 
 

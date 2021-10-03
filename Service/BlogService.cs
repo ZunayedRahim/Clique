@@ -20,11 +20,14 @@ namespace Clique.Service
         Payload Create(User user);
         Payload Login(UserViewModels user);
         User GetById(string id);
+
+        Task<Thread> GetPostById(string id);
         Task<Payload> UploadImage(IFormFile file);
     }
     public class BlogService : IBlogService
     {
         private readonly IMongoCollection<User> _userCollection;
+        private readonly IMongoCollection<Thread> _threadCollection;
         private readonly string _secretKey;
         private readonly int _tokenExpiryTime;
         private readonly string _uploadCareSecret;
@@ -35,6 +38,7 @@ namespace Clique.Service
         {
             var db = client.GetDatabase("clique");
             _userCollection = db.GetCollection<User>("user");
+            _threadCollection = db.GetCollection<Thread>("thread");
             _secretKey = config["JWT:Secret"];
             _tokenExpiryTime = Int32.Parse(config["JWT:ExpiresIn"]);
             _uploadCarePubKey = config["UploadCare:PubKey"];
@@ -97,6 +101,44 @@ namespace Clique.Service
         {
             return _userCollection.Find(x => x.Id == id).FirstOrDefault();
         }
+
+
+        async public Task<Thread> GetPostById(string id)
+        {
+            try
+            {
+                var filter = Builders<Thread>.Filter.Eq("Id", id);
+                var projection = Builders<Thread>.Projection.
+                    Include("title").
+                    Include("description").
+                    Include("image_src").
+                    Include("upvote").
+                    Include("downvote").
+                    Include("totalvote").
+                    Include("op_id").
+                    Include("op_name").
+                    Include("comment_id").
+                    Include("report_count");
+                Console.WriteLine("blogservice");
+                var result = await _threadCollection.Find(filter).Project(projection).FirstOrDefaultAsync();
+                Thread thread = BsonSerializer.Deserialize<Thread>(result);
+                // find the user name from the post author id
+                var user = await _userCollection.Find(x => x.Id == thread.OP_id).FirstOrDefaultAsync();
+                Console.WriteLine("blogservice");
+                if (user == null)
+                {
+                    return null;
+                }
+                thread.OP_name = user.Username;
+                
+                return thread;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
 
         public async Task<Payload> UploadImage(IFormFile file)
         {

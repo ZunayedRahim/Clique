@@ -6,10 +6,24 @@ import { useState } from "react";
 import man from '../../../images/man.jpg';
 import upvote from '../../../images/upvote.png';
 import downvote from '../../../images/down.png';
-
+import { useParams } from "react-router";
+import { GET } from "../../../api/api";
+import axios from "axios";
 
 export default function Post( post ) {
-  
+  const {id } =useParams();
+  console.log("id up: "+id);
+ 
+  const Getpostid = async (e) =>{
+    e.preventDefault()
+    
+    const{data} = await axios.get(`https://localhost:5001/thread/${id}`);
+    console.log("id"+data);
+    
+   
+
+
+}
   return (
       
     <div className="postPrivate">
@@ -45,7 +59,7 @@ export default function Post( post ) {
             </span>
         </div>
         
-        <div className="postCenter">
+        <div className="postCenter" onClick={Getpostid}>
           <div className="postText"> {post.description}</div>
           <img className="postImg" src={post.image} alt="" />
         </div>

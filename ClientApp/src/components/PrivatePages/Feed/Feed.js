@@ -25,6 +25,7 @@ export default function Feed() {
       try {
         const { data } = await GET_AUTH("thread/privatethread");
         console.log(data);
+        
         setPosts(data);
         setLoading(false);
       } catch (e) {

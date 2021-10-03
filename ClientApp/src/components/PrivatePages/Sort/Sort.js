@@ -13,6 +13,10 @@ export default function Sort() {
         history.push("/NewPost")
 
     }
+    function gotocommunities(){
+        history.push("/SeeCommunities")
+
+    }
   return (
     <div className="share">
     <div className="shareWrapper">
@@ -32,12 +36,13 @@ export default function Sort() {
               </div>
               <div className="option">
               <img src={Community} alt="" className="optionIcon"/>
-                  <span className="optionText">Communities</span>
+                  <span className="optionText" onClick={gotocommunities}>Communities</span>
               </div>
               
           </div>
-          <button className="addButton" onClick={createpost}>Add</button>
+          <button className="addButton" onClick={createpost}>Post Something</button>
       </div>
+      
     </div>
   </div>
   )

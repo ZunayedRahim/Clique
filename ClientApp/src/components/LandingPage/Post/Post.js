@@ -51,7 +51,7 @@ const gotologin = async (e) =>{
           </div>
       
         </div>
-        <div className="postTopDown">
+        <div className="postTopDown" onClick={gotopost}>
         <span className="postCommunity">
               c/keeanureeves
               

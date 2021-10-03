@@ -1,5 +1,5 @@
 import "./postPrivate.css";
-
+import add from '../../../images/add.png';
 import { MoreVert } from "@material-ui/icons";
 import profilepic from '../../../images/reaper.png';
 import { useState } from "react";
@@ -29,7 +29,12 @@ export default function Post( post ) {
             <span className="postDate"> 24 September,2021, 1:33pm</span>
           </div>
           <div className="postTopRight">
-            <MoreVert />
+          <img
+              className="postProfileImg"
+              src={add}
+              alt=""
+              //onClick={gotologin}
+            />
           </div>
       
         </div>

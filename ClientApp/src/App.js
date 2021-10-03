@@ -11,6 +11,7 @@ import PrivatePage from './Pages/PrivatePage'
 import InsidePost from './Pages/InsidePost'
 import SeeCommunities from './Pages/SeeCommunities'
 import CommunityDetails from './Pages/CommunityDetails'
+import CreateCommunity from './Pages/CreateCommunity'
 import {BrowserRouter as Router,
   Route,
   Switch,
@@ -34,6 +35,7 @@ class App extends Component{
       <Route exact path="/InsidePost" component={InsidePost}></Route>
       <Route exact path="/SeeCommunities" component={SeeCommunities}></Route>
       <Route exact path="/CommunityDetails" component={CommunityDetails}></Route>
+      <Route exact path="/CreateCommunity" component={CreateCommunity}></Route>
       <Route component={NotFound}></Route>
       <Redirect to ="/NotFound" />
       </Switch>

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import axios from "axios"
 import "./feed.css";
 import Grid from '@material-ui/core/Grid';
+import CreateCom from "../Create/CreateCom";
 
 
 export default function Feed() {
@@ -42,6 +43,7 @@ export default function Feed() {
     <div className="feed">
       <div className="feedWrapper">
       
+      <CreateCom/>
        {posts.map((post) => (
                
                   <Community

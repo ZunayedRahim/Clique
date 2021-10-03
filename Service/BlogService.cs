@@ -22,6 +22,7 @@ namespace Clique.Service
         User GetById(string id);
 
         Task<Thread> GetPostById(string id);
+        Task<Payload> UploadImage(IFormFile file);
     }
     public class BlogService : IBlogService
     {
@@ -29,8 +30,9 @@ namespace Clique.Service
         private readonly IMongoCollection<Thread> _threadCollection;
         private readonly string _secretKey;
         private readonly int _tokenExpiryTime;
-
-     
+        private readonly string _uploadCareSecret;
+        private readonly string _uploadCarePubKey;
+        private readonly int _uploadCareExpiry;
 
          public BlogService(IMongoClient client,IConfiguration config)
         {
@@ -39,7 +41,9 @@ namespace Clique.Service
             _threadCollection = db.GetCollection<Thread>("thread");
             _secretKey = config["JWT:Secret"];
             _tokenExpiryTime = Int32.Parse(config["JWT:ExpiresIn"]);
-
+            _uploadCarePubKey = config["UploadCare:PubKey"];
+            _uploadCareSecret = config["UploadCare:Secret"];
+            _uploadCareExpiry = int.Parse(config["UploadCare:Expiry"]);
            
         }
 
@@ -98,6 +102,7 @@ namespace Clique.Service
             return _userCollection.Find(x => x.Id == id).FirstOrDefault();
         }
 
+
         async public Task<Thread> GetPostById(string id)
         {
             try
@@ -135,6 +140,39 @@ namespace Clique.Service
                 return null;
             }
 
+        public async Task<Payload> UploadImage(IFormFile file)
+        {
+            string URL = $"https://upload.uploadcare.com/base/";
+            HttpClient client = new HttpClient();
+
+            // the following headers are required for the uploadcare API
+            KeyValuePair<string, string> keys = Util.GenerateSignature(_uploadCareSecret, _uploadCareExpiry);
+
+            MultipartFormDataContent form = new MultipartFormDataContent();
+            // convert file to byte array
+            byte[] data;
+            using (var br = new BinaryReader(file.OpenReadStream()))
+                data = br.ReadBytes((int)file.OpenReadStream().Length);
+
+            ByteArrayContent bytes = new ByteArrayContent(data);
+            form.Add(new StringContent(keys.Key), "expire");
+            form.Add(new StringContent(keys.Value), "signature");
+            form.Add(new StringContent(_uploadCarePubKey), "UPLOADCARE_PUB_KEY");
+            form.Add(new StringContent("1"), "UPLOADCARE_STORE");
+            form.Add(bytes, "file", file.FileName);
+
+            HttpResponseMessage response = await client.PostAsync(URL, form);
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Image uploaded successfully");
+                var jo = JObject.Parse(response.Content.ReadAsStringAsync().Result);
+                var fileUrl = jo["file"].ToString();
+                Console.WriteLine(fileUrl);
+
+                return new Payload { StatusCode = 200, StatusDescription = $"https://ucarecdn.com/{fileUrl}/" };
+
+            }
+            return null;
         }
     }
 }

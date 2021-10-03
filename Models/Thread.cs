@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using Microsoft.AspNetCore.Http;
 
 namespace Clique.Models
 {
@@ -33,7 +34,7 @@ namespace Clique.Models
         [BsonElement("report_count")]
        public int Report_count { get; set; }
 
-        
+
         
     }
 }

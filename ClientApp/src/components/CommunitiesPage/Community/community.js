@@ -23,6 +23,7 @@ const gotocommunity = async (e) =>{
 
 
 }
+console.log(post.image_Url+"Getting?");
   return (
       
     <div className="postLandingC" >
@@ -31,7 +32,8 @@ const gotocommunity = async (e) =>{
           <div className="postTopLeft">
             <img
               className="postProfileImgC"
-              src={profilepic}
+              src={post.image_Url}
+              
               alt=""
             />
             <span className="postUsername">

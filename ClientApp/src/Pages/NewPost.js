@@ -14,6 +14,7 @@ import man from '../images/rsz_createpost.jpg';
 import logo from '../images/clique_logo.PNG';
 import { Link, useHistory } from 'react-router-dom'
 import axios from "axios"
+import { FormControl, InputLabel, MenuItem, Select, useFormControl } from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
     root: {
       height: '100vh',
@@ -77,6 +78,14 @@ const useStyles = makeStyles((theme) => ({
       },
     signupstyle: {
         fontFamily: "Lato",
+    },
+    select:{
+      '&:before': {
+        borderColor: 'black',
+    },
+    '&:after': {
+        borderColor: 'black',
+    }
     }
   }));
   
@@ -90,9 +99,8 @@ function NewPost()
     const history=useHistory();
     const [titleError,setTitleError] = useState(false)
     const [detailsError,setDetailsError] = useState(false)
-
-    const [title,setTitle] = useState('')
-    const [description,setDescription] = useState('')
+    const [communities,setCommunities]= useState('');
+    const [selectedcommunities,setSelectedcommunities]= useState('');
   const [file, setFile] = React.useState(null);
   const [filename, setFilename] = React.useState(null);
   const [form, setForm] = React.useState(null);
@@ -107,6 +115,7 @@ function NewPost()
     }
   }, [file]);
 
+  
   const onInputChange = (event) => {
     const { value, name } = event.target;
     setForm((prevState) => ({
@@ -127,6 +136,10 @@ function NewPost()
     }
   };
 
+
+  const handleChange = (event) => {
+    setSelectedcommunities(event.target.value);
+  };
 
     const onCreatePost = async (e) => {
         e.preventDefault();
@@ -246,7 +259,22 @@ function NewPost()
                   </Button>
                 </label>
               </div> */}
-             
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-required-label">Select a community</InputLabel>
+                <Select
+                labelId="demo-simple-select-helper-label"
+                id="demo-simple-select-required"
+                onChange={handleChange}
+                label="Select a community"
+                className={classes.select}
+               
+                >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+              </FormControl>
+
 
              <Button
               type="submit"

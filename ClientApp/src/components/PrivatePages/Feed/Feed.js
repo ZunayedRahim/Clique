@@ -25,6 +25,7 @@ export default function Feed() {
       try {
         const { data } = await GET_AUTH("thread/privatethread");
         console.log(data);
+        
         setPosts(data);
         setLoading(false);
       } catch (e) {
@@ -53,6 +54,10 @@ export default function Feed() {
                     upvote={post.upvote}
                     downvote={post.downvote}
                     image={post.image}
+                    id = {post.id}
+                    onClick = {()=>{
+                      window.location.href=`/InsidePost/${post.id}`
+                    }}
                     
                   />
                    ))} 

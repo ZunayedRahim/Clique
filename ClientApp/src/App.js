@@ -45,7 +45,8 @@ class App extends Component{
       <Route exact path="/UserProfileEdit" component={UserProfileEdit}></Route>
 
       <Route exact path="/PrivatePage" component={PrivatePage}></Route>
-      <Route exact path="/InsidePost" component={InsidePost}></Route>
+      {/* inside post private route */}
+      <Route exact path="/InsidePost/:id" component={InsidePost}></Route>
       <Route exact path="/SeeCommunities" component={SeeCommunities}></Route>
       <Route exact path="/CommunityDetails" component={CommunityDetails}></Route>
 

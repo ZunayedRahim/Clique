@@ -4,7 +4,7 @@ import axios from "axios"
 import "./feed.css";
 import Grid from '@material-ui/core/Grid';
 import CreateCom from "../Create/CreateCom";
-
+import { GET } from '../../../api/api'
 
 export default function Feed() {
     const [loading, setLoading] = React.useState(true);
@@ -22,7 +22,7 @@ export default function Feed() {
     setLoading(false);
     const exe = async () => {
       try {
-        const { data } = await axios.get("https://localhost:5001/thread");
+        const { data } = await GET("community/public");
         console.log(data);
         setPosts(data);
         setLoading(false);
@@ -37,8 +37,8 @@ export default function Feed() {
     return <p>Loading...</p>;
   }
 
-
-
+  console.log(posts);
+  
   return (
     <div className="feed">
       <div className="feedWrapper">
@@ -48,8 +48,9 @@ export default function Feed() {
                
                   <Community
                     
-                    title={post.title}
+                    title={post.name}
                     description={post.description}
+                    image_Url={post.image_Url}
                    
                     
                   />

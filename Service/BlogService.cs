@@ -23,11 +23,18 @@ namespace Clique.Service
 
         Task<Thread> GetPostById(string id);
         Task<Payload> UploadImage(IFormFile file);
+        List<Community> GetCommunitiesByCategory(string category);
+        Task<Payload> CreateCommunity(Community community);
+
     }
     public class BlogService : IBlogService
     {
         private readonly IMongoCollection<User> _userCollection;
+
+        private readonly IMongoCollection<Community> _communityCollection;
+
         private readonly IMongoCollection<Thread> _threadCollection;
+
         private readonly string _secretKey;
         private readonly int _tokenExpiryTime;
         private readonly string _uploadCareSecret;
@@ -38,7 +45,11 @@ namespace Clique.Service
         {
             var db = client.GetDatabase("clique");
             _userCollection = db.GetCollection<User>("user");
+
+            _communityCollection = db.GetCollection<Community>("community");
+
             _threadCollection = db.GetCollection<Thread>("thread");
+
             _secretKey = config["JWT:Secret"];
             _tokenExpiryTime = Int32.Parse(config["JWT:ExpiresIn"]);
             _uploadCarePubKey = config["UploadCare:PubKey"];
@@ -103,6 +114,31 @@ namespace Clique.Service
         }
 
 
+
+         async public Task<Payload> CreateCommunity(Community community)
+        {
+            try
+            {
+                Console.WriteLine(community.CoverPhoto);
+                Console.WriteLine( "Name " +community.Name);
+                Console.WriteLine( "Mod id " +community.Moderator_id);
+                Console.WriteLine( "mem " +community.Member_no);
+                // upload the image to the cloud bucket and then store the url
+                var res = await UploadImage(community.CoverPhoto);
+                
+                if (res == null)
+                {
+                    return new Payload { StatusCode = 400, StatusDescription = "Couldn't upload image" };
+                }
+
+                community.Image_Url = res.StatusDescription;
+                // setting the file field to null as we won't be saving the file directly in the database
+                community.CoverPhoto = null;
+
+                // insert the post into database
+                await _communityCollection.InsertOneAsync(community);
+                return new Payload { StatusCode = 200, StatusDescription = "Community created successfully." };
+
         async public Task<Thread> GetPostById(string id)
         {
             try
@@ -133,12 +169,21 @@ namespace Clique.Service
                 
                 return thread;
 
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+
+                return new Payload { StatusCode = 400, StatusDescription = e.Message };
+            }
+
+        }
+
+
                 return null;
             }
+
 
         public async Task<Payload> UploadImage(IFormFile file)
         {
@@ -173,6 +218,31 @@ namespace Clique.Service
 
             }
             return null;
+        }
+        public List<Community> GetCommunitiesByCategory(string category)
+        {
+            try
+            {
+                var filter = Builders<Community>.Filter.Eq("category", category);
+                var projection = Builders<Community>.Projection.
+                    Include("name").
+                    Include("description").
+                    Include("category").
+                    Include("image_url");
+
+                var communityList = _communityCollection.Find(filter).Project(projection).ToList();
+                List<Community> communities = new List<Community>();
+                foreach (var community in communityList)
+                    communities.Add(BsonSerializer.Deserialize<Community>(community));
+
+                return communities;
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+
         }
     }
 }

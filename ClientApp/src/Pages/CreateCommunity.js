@@ -14,6 +14,8 @@ import man from '../images/rsz_createpost.jpg';
 import logo from '../images/clique_logo.PNG';
 import { Link, useHistory } from 'react-router-dom'
 import axios from "axios"
+import { FormControl, FormControlLabel, FormLabel, RadioGroup } from '@material-ui/core'
+import { POST, POST_AUTH } from '../api/api'
 const useStyles = makeStyles((theme) => ({
     root: {
       height: '100vh',
@@ -82,22 +84,21 @@ const useStyles = makeStyles((theme) => ({
   }));
   
 
-function NewPost()
+function CreateCommunity()
 {
     const classes = useStyles();
     const [titlein,setTitlein] = useState('')
     const [detailsin,setDetailsin] = useState('')
-   
+    const [categoryCom,setCategoryCom] = useState('public')
     const history=useHistory();
     const [titleError,setTitleError] = useState(false)
     const [detailsError,setDetailsError] = useState(false)
 
-    const [title,setTitle] = useState('')
-    const [description,setDescription] = useState('')
+   
   const [file, setFile] = React.useState(null);
   const [filename, setFilename] = React.useState(null);
   const [form, setForm] = React.useState(null);
-  const [alert, setAlert] = React.useState(null);
+ 
 
   useEffect(() => {
     if (file) {
@@ -109,6 +110,7 @@ function NewPost()
   }, [file]);
 
   const onInputChange = (event) => {
+    console.log("Getting");
     const { value, name } = event.target;
     setForm((prevState) => ({
       ...prevState,
@@ -128,56 +130,43 @@ function NewPost()
     }
   };
 
+  const onCreatePost = async (e) => {
+    e.preventDefault();
+   // form.CoverPhoto = file;
 
-    const onCreatePost = async (e) => {
-        e.preventDefault();
-        // form.imageURL = file;
-        // console.log(form);
-        console.log(titlein,detailsin);
-        const { data } = await axios.post("https://localhost:5001/community/add", 
-          {
-            name: titlein,
-            description: detailsin,
-            creator_id : "123123",
-            moderator_id : "123123",
-            moderator_no:"23",
-
-          }
-          );
-          console.log(data);
-         // history.push("/PrivatePage")
-
-        // try {
-        //   var formData = new FormData();
-        //   formData.append("title", form.title);
-        //   formData.append("description", form.description);
-        //   formData.append("imageURL", "img.url");
-        //   formData.append("upvote",0);
-        //   formData.append("downvote",0);
-        //   formData.append("totalVote",0);
-        //   formData.append("oP_id","123123");
-        //   formData.append("oP_name","nafisha");
-        //   formData.append("comment_id","232323");
-        //   formData.append("report_count",0);
-         
+  // form.creator = "123456"
+    console.log(form);
+    try {
+      var formData = new FormData();
+      formData.append("name", form.name);
+      formData.append("description", form.description);
+     
+      formData.append("member_no", 15 );
+      formData.append("coverPhoto", file);
+      formData.append("category", categoryCom);
     
-          
+      // const config = {
+      //   headers: {
+      //     Authorization: "Bearer " + localStorage.getItem("access_token"),
+      //   },
+      // };
+      console.log(formData);
+      const { data } = await POST_AUTH(`community/add`,formData);
+      console.log(data);
 
-          
-    
-        // //   if (data.statusCode === 200) {
-        // //     setAlert(null);
-        // //     window.location.href = "/";
-        // //   }
-        // } catch (e) {
-        //   console.log(e);
-        //   if (e.response) {
-        //     setAlert("something");
-        //   } else {
-        //     console.log("server didnt respond");
-        //   }
-        // }
-      };
+      if (data.statusCode === 200) {
+        console.log("success");
+      }
+    } catch (e) {
+      console.log(e);
+      if (e.response) {
+       
+      } else {
+        console.log("server didnt respond");
+      }
+    }
+  };
+
 
     return(
         <Grid container component="main" className={classes.root}>
@@ -192,21 +181,21 @@ function NewPost()
 
             <form className={classes.form} noValidate >
             <TextField
-               onChange={(e) =>setTitlein(e.target.value)}
+              onChange ={onInputChange}
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              id="title"
+              id="name"
               label="Give your community a name"
-              name="title"
+              name="name"
               
               autoFocus
               error={titleError}
             //  className={classes.submit}
             />
             <TextField
-              onChange={(e) =>setDetailsin(e.target.value)}
+              onChange ={onInputChange}
               variant="outlined"
               margin="normal"
               required
@@ -221,6 +210,15 @@ function NewPost()
               error={detailsError}
               
             />
+            <FormControl component="fieldset">
+        <FormLabel component="legend">What type of community is this?</FormLabel>
+          <RadioGroup aria-label="community" name="community" value={categoryCom} onChange={(e) =>setCategoryCom(e.target.value)}>
+           <FormControlLabel value="public" control={<Radio />} label="Pubic" />
+          <FormControlLabel value="private" control={<Radio />} label="Private" />
+ 
+          </RadioGroup>
+        </FormControl>
+            
              <div style={{ marginTop: "var(--margin-item-spacing)" }}>
                 <input
                   accept="image/*"
@@ -238,7 +236,7 @@ function NewPost()
                     className={classes.photos}
                   
                   >
-                     Select photo to upload
+                     Select cover photo to upload
                   </Button>
                 </label>
               </div>
@@ -264,4 +262,4 @@ function NewPost()
 
     ) 
 }
-export default NewPost
+export default CreateCommunity

@@ -6,8 +6,35 @@ import upvote from '../../../images/upvote.png';
 import downvote from '../../../images/down.png';
 import { Link, useHistory } from 'react-router-dom'
 import add from '../../../images/add.png';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#000000",
+    color: "white",
+    height: 35,
+    borderRadius: 5,
+  borderWidth: 1,
+  borderStyle: 'solid',
+  borderColor: '#000000',
+    '&:hover' : {
+      color: "white",
+      backgroundColor: "#000000",
+      borderColor: "red",
+      
+    }
+
+  }
+}));
+
+
+
 
 export default function Community( post ) {
+  const classes = useStyles();
   const history=useHistory();
   const gotologin = async (e) =>{
     e.preventDefault()
@@ -44,12 +71,15 @@ console.log(post.image_Url+"Getting?");
             
           </div>
           <div className="postTopRight">
-          <img
-              className="addImg"
-              src={add}
-              alt=""
-              onClick={gotologin}
-            />
+          <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              className={classes.submit}
+              onClick={gotocommunity}
+            >
+              Visit
+            </Button>
           </div>
       
         </div>

@@ -9,13 +9,13 @@ import add from '../../../images/add.png';
 
 export default function Post( post ) {
   const history=useHistory();
-  const gotopost = async (e) =>{
-    e.preventDefault()
-    history.push("/InsidePost");
+//   const gotopost = async (e) =>{
+//     e.preventDefault()
+//     history.push("/InsidePost");
    
 
 
-}
+// }
 const gotologin = async (e) =>{
   e.preventDefault()
   history.push("/Signin");
@@ -58,7 +58,7 @@ const gotologin = async (e) =>{
             </span>
         </div>
         
-        <div className="postCenter" onClick={gotopost}>
+        <div className="postCenter" onClick={post.onClick}>
           <div className="postText"> {post.description}</div>
           <img className="postImg" src={post.image} alt="" />
         </div>

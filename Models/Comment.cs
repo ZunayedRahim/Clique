@@ -9,11 +9,11 @@ namespace Clique.Models
         [BsonRepresentation(BsonType.ObjectId)]
        public string Id { get; set; }
         [BsonElement("op_id")]
-       public string OriginalPoster_id { get; set; }
+       public string Op_id { get; set; }
         [BsonElement("content")]
-       public string ContentOfComment { get; set; }
-        [BsonElement("parent_id")]
-       public string ParentComment_id { get; set; }
+       public string Content { get; set; }
+        [BsonElement("post_id")]
+       public string Post_id { get; set; }
         [BsonElement("upvote")]
        public int Upvote { get; set; }
        [BsonElement("downvote")]

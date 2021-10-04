@@ -3,9 +3,10 @@ import React, { useEffect } from 'react'
 import axios from "axios"
 import "./feed.css";
 import Grid from '@material-ui/core/Grid';
+import { useParams } from "react-router";
+import { PinDropSharp, PostAddSharp } from "@material-ui/icons";
 
-
-export default function Feed() {
+export default function Feed(props) {
     const [loading, setLoading] = React.useState(true);
   const [posts, setPosts] = React.useState([]);
 
@@ -16,13 +17,15 @@ export default function Feed() {
 //     setPosts(response);
 //   }
 //   req()
-
+const {id } =useParams();
+console.log(id);
   useEffect(() => {
     setLoading(false);
     const exe = async () => {
       try {
-        const { data } = await axios.get("https://localhost:5001/thread");
+        const{data} = await axios.get(`https://localhost:5001/thread/${id}`);
         console.log(data);
+        
         setPosts(data);
         setLoading(false);
       } catch (e) {
@@ -46,10 +49,10 @@ export default function Feed() {
                
                   <Post
                     
-                    title="This is my Post title"
-                    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet malesuada leo, ac aliquet nulla. Nulla eu nunc quis neque luctus tincidunt. Etiam eget justo eu lacus aliquet aliquet sed id sapien. Aenean hendrerit, lacus non venenatis tincidunt, magna quam blandit nulla, nec imperdiet ante est eget leo. Ut sed tellus nibh. Nullam volutpat fermentum ipsum, ut porta nisl sagittis quis. Morbi at rhoncus tortor, eget pellentesque lacus."
-                    upvote="0"
-                    downvote="0"
+                    title= {posts.title}
+                    description={posts.description}
+                    upvote={posts.upvote}
+                    downvote={posts.downvote}
                     
                     commentname="John wick"
                     comment="This is my first comment"

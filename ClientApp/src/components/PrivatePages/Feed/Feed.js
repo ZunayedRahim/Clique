@@ -54,6 +54,10 @@ export default function Feed() {
                     upvote={post.upvote}
                     downvote={post.downvote}
                     image={post.image}
+                    id = {post.id}
+                    onClick = {()=>{
+                      window.location.href=`/InsidePost/${post.id}`
+                    }}
                     
                   />
                    ))} 

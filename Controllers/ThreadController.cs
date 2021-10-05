@@ -320,6 +320,7 @@ namespace Clique.Controllers
         }
 
         //Create a reply to a comment
+        [Authorize]
         [HttpPost]
         [Route("createReply/{id}")] //id = comment id
         public string CreateCommentReply([FromBody] Comment reply, string id)
@@ -335,9 +336,12 @@ namespace Clique.Controllers
 
         [HttpGet]
         [Route("getReply/{id}")] // id = main comment's id
-        public List<Comment> GetCommentReply(string id)
+        public IEnumerable<Comment> GetCommentReply(string id)
         {
-            var allReply = commentCollection.Find(x => x.Id == id).ToList();
+            var allReply = commentCollection.Find(x => x.Post_id == id).ToList();
+
+                Console.WriteLine( "Ïnside get reply");
+                Console.WriteLine( "url: "+id);
             return allReply;
         }
 

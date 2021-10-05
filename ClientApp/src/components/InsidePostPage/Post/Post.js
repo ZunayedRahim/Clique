@@ -38,7 +38,7 @@ export default function Post( post ) {
 
   return (
       
-    <div className="post">
+    <div className="postSingle">
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">

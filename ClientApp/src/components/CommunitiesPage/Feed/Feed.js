@@ -22,7 +22,7 @@ export default function Feed() {
     setLoading(false);
     const exe = async () => {
       try {
-        const { data } = await GET("community/public");
+        const { data } = await GET("community");
         console.log(data);
         setPosts(data);
         setLoading(false);
@@ -57,6 +57,8 @@ export default function Feed() {
                     }}
                     
                   />
+
+                 
                    ))} 
       </div>
     </div>

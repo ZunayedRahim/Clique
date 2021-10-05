@@ -48,7 +48,7 @@ class App extends Component{
       {/* inside post private route */}
       <Route exact path="/InsidePost/:id" component={InsidePost}></Route>
       <Route exact path="/SeeCommunities" component={SeeCommunities}></Route>
-      <Route exact path="/CommunityDetails" component={CommunityDetails}></Route>
+      <Route exact path="/CommunityDetails/:id" component={CommunityDetails}></Route>
 
       <Route exact path="/CreateCommunity" component={CreateCommunity}></Route>
 

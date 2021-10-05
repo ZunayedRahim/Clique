@@ -7,7 +7,7 @@ import CommunityDetail from "../CommunityDetails/CommunityDetail";
 import { useParams } from "react-router";
 import { GET } from '../../../api/api'
 
-export default function Feed() {
+export default function Feed(props) {
     const [loading, setLoading] = React.useState(true);
   const [posts, setPosts] = React.useState([]);
   const [community, setCommunity] = React.useState([]);
@@ -21,6 +21,7 @@ export default function Feed() {
 
 const { id } =useParams();
 console.log(id);
+console.log(props.id);
   useEffect(() => {
     setLoading(false);
     const exe = async () => {

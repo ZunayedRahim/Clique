@@ -150,7 +150,7 @@ function NewPost()
         // form.imageURL = file;
         // console.log(form);
         console.log(titlein,detailsin);
-        const { data } = await POST_AUTH("thread/add", 
+        const { data } = await POST_AUTH("thread/add/615ab6217e38c58165a85656", 
           {
             title: titlein,
             description: detailsin,
@@ -160,6 +160,10 @@ function NewPost()
             totalVote : 0,
             comment_id : "232323",
             report_count: 0, 
+            community_id : "615ab6217e38c58165a85656",
+            community_name : "",
+            thread_type : "public",
+            
 
           }
           );

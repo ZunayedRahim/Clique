@@ -24,6 +24,8 @@ namespace Clique.Controllers
         private IMongoCollection<Comment> commentCollection;
 
         private IMongoCollection<Report> reportCollection;
+
+        private IMongoCollection<Community> communityCollection;
         private readonly string _userId;
         private readonly IBlogService _blogService;
         public ThreadController(IMongoClient client, IBlogService _blogService)
@@ -35,22 +37,24 @@ namespace Clique.Controllers
             votingCollection = database.GetCollection<Voting>("vote");
             commentCollection = database.GetCollection<Comment>("comment");
             reportCollection = database.GetCollection<Report>("report");
+            communityCollection = database.GetCollection<Community>("community");
             this._blogService = _blogService;
             IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
             _userId = (string)_httpContextAccessor.HttpContext.Items["UserId"];
         }
 
-        //Get user id 
+        //View all public threads
         [HttpGet]
 
         public IEnumerable<Thread> Get()
         {
 
             Console.WriteLine("uid:" + _userId);
-            return threadCollection.Find(s => true).ToList();
+            var publicThread = threadCollection.Find(s => s.Thread_type == "public").ToList();
+            return publicThread;
         }
 
-        //View all private threads
+        //View all public & private threads
         [Authorize]
         [HttpGet]
         [Route("privatethread")]
@@ -58,14 +62,15 @@ namespace Clique.Controllers
         {
 
             Console.WriteLine("uid:" + _userId);
-            return threadCollection.Find(s => true).ToList();
+            var privateThread = threadCollection.Find(s => s.Thread_type == "public" || s.Thread_type == "private").ToList();
+            return privateThread;
         }
 
         //Create a new Thread
         [Authorize]
         [HttpPost]
-        [Route("add")]
-        public string post(Thread t)
+        [Route("add/{id}")] // id = community id
+        public string post([FromBody]Thread t, string id)
         {
             t.OP_id = _userId;
             Console.WriteLine("model " + t.OP_id);
@@ -73,10 +78,17 @@ namespace Clique.Controllers
             var user = userCollection.Find(x => x.Id == _userId).FirstOrDefault();
             t.OP_name = user.Username;
 
+            var community = communityCollection.Find(x=>x.Id == id).FirstOrDefault();
+
+            t.Community_id = id;
+            t.Community_name = community.Name;
+            t.Thread_type = "public";
+
             threadCollection.InsertOne(t);
             return "Thank you for posting a new thread";
         }
 
+        //Get inside a thread
         // GET /[thread]/:id
         [HttpGet]
         [Route("{id}")]
@@ -366,20 +378,59 @@ namespace Clique.Controllers
             return "Previously Reported";
         }
 
-        // public string addSingleComment([FromBody] Comment c, string id)
+        //Sorting Front Page 
+        
+        //Trending : top voted threads last day
+
+        // [Authorize]
+        // [HttpGet]
+        // [Route("privatethreadByNew")]
+        // public IEnumerable<Thread> GetPrivateThreadByNew()
         // {
-        //     Console.WriteLine(id);
-        //     Console.WriteLine("comment " + c.Op_id);
-        //     Console.WriteLine("comment " + c.Content);
 
-        //     c.Op_id = _userId;
-        //     c.Post_id = id;
+        //     Console.WriteLine("uid:" + _userId);
+        //     // var threadTop = threadCollection.Find(s => true).SetSortOrder(SortBy.Descending("upvote"));
 
-        //     commentCollection.InsertOne(c);
-        //     return "Comment added successfully " + id;
+        //     var sort = Builders<Thread>.Sort.Descending("created_at");
+        //     var threadTop = threadCollection.Find(s=>s.Thread_type == "private" || s.Thread_type=="public").Sort(sort).ToList();
+
+        //     return threadTop;
         // }
+        
+        //New : latest threads
+
+        [Authorize]
+        [HttpGet]
+        [Route("privatethreadByNew")]
+        public IEnumerable<Thread> GetPrivateThreadByNew()
+        {
+
+            Console.WriteLine("uid:" + _userId);
+            // var threadTop = threadCollection.Find(s => true).SetSortOrder(SortBy.Descending("upvote"));
+
+            var sort = Builders<Thread>.Sort.Descending("created_at");
+            var threadTop = threadCollection.Find(s=>s.Thread_type == "private" || s.Thread_type=="public").Sort(sort).ToList();
+
+            return threadTop;
+        }
 
 
+        //Top : top voted threads
+         //View all private threads
+        [Authorize]
+        [HttpGet]
+        [Route("privatethreadByTop")]
+        public IEnumerable<Thread> GetPrivateThreadByTop()
+        {
+
+            Console.WriteLine("uid:" + _userId);
+            // var threadTop = threadCollection.Find(s => true).SetSortOrder(SortBy.Descending("upvote"));
+
+            var sort = Builders<Thread>.Sort.Descending("upvote");
+            var threadTop = threadCollection.Find(s=>s.Thread_type == "private" || s.Thread_type=="public").Sort(sort).ToList();
+
+            return threadTop;
+        }
 
 
 

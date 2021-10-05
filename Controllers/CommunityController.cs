@@ -9,6 +9,7 @@ using System.Linq;
 using Clique.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Clique.ViewModels;
 
 namespace Clique.Controllers
 {
@@ -17,6 +18,8 @@ namespace Clique.Controllers
     public class CommunityController : Controller
     {
         private IMongoCollection<Community> communityCollection;
+
+        private IMongoCollection<UserCommunityViewModels> userCommunityCollection;
          private readonly IBlogService _blogService;
 
          public readonly string _userId;
@@ -24,6 +27,7 @@ namespace Clique.Controllers
         {
             var database = client.GetDatabase("clique");
             communityCollection = database.GetCollection<Community>("community");
+            userCommunityCollection = database.GetCollection<UserCommunityViewModels>("user_community");
             this._blogService = _userService;
 
             IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
@@ -95,6 +99,52 @@ namespace Clique.Controllers
             }
             return Ok(community);
         }
+
+
+        //Gets the community list a user already joined
+        [Authorize]
+        [HttpGet]
+        [Route("communityList")]
+
+        public IEnumerable<UserCommunityViewModels> GetCommunityList()
+        {
+
+            var communityList = userCommunityCollection.Find(x=>x.User_id==_userId).ToList();
+
+            return communityList;
+        }
+
+        //join a community
+        [Authorize]
+        [HttpPost]
+        [Route("joinCommunity")]
+
+        public string JoinCommunity(UserCommunityViewModels user_community)
+        {
+            user_community.User_id = _userId;
+            
+            userCommunityCollection.InsertOne(user_community);
+            return "Joined successfully";
+        }
+
+        //unfollow a community
+        [Authorize]
+        [HttpPost]
+        [Route("leaveCommunity/{id}")]  // id = community id
+
+        public string LeaveCommunity(string id)
+        {
+            var filter = Builders<UserCommunityViewModels>.Filter.Eq("User_id",_userId);
+            filter &= (Builders<UserCommunityViewModels>.Filter.Eq("Community_id",id));
+            userCommunityCollection.DeleteMany(filter);
+
+            return "Left community successfully";
+        }
+
+        
+
+
+
     }
 
    

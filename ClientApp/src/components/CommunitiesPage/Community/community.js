@@ -43,13 +43,13 @@ export default function Community( post ) {
 
 
 }
-const gotocommunity = async (e) =>{
-  e.preventDefault()
-  history.push("/CommunityDetails");
+// const gotocommunity = async (e) =>{
+//   e.preventDefault()
+//   // history.push("/CommunityDetails");
  
 
 
-}
+// }
 console.log(post.image_Url+"Getting?");
   return (
       
@@ -76,21 +76,21 @@ console.log(post.image_Url+"Getting?");
               fullWidth
               variant="contained"
               className={classes.submit}
-              onClick={gotocommunity}
+              onClick={post.onClick}
             >
               Visit
             </Button>
           </div>
       
         </div>
-        <div className="postTopDownC" onClick={gotocommunity}>
+        <div className="postTopDownC" >
         <span className="postCommunity">
               c/keeanureeves
               
             </span>
         </div>
         
-        <div className="postCenter" onClick={gotocommunity}>
+        <div className="postCenter">
           <div className="postText"> {post.description}</div>
          
         </div>

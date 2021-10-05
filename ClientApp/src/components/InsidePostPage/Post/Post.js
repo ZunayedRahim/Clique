@@ -5,12 +5,37 @@ import add from '../../../images/add.png';
 import { useState } from "react";
 import upvote from '../../../images/upvote.png';
 import downvote from '../../../images/down.png';
-import Comments from "../Comments/Comments";
+import Comments from "../Comments/CreateComment";
+import { Button, TextareaAutosize, TextField } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 
+const useStyles = makeStyles((theme) => ({
+    
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#000000",
+    color: "white",
+    height: 50,
+    borderRadius: 10,
+  borderWidth: 1,
+  borderStyle: 'solid',
+  borderColor: '#000000',
+    '&:hover' : {
+      color: "red",
+      backgroundColor: "#000000",
+      borderColor: "red",
+    }
+
+  }
+}));
 
 export default function Post( post ) {
- 
+  const classes = useStyles();
+  const [comment,setComment] = useState('');
+
+
   
+
   return (
       
     <div className="post">
@@ -91,7 +116,8 @@ export default function Post( post ) {
          
         </div> */}
 
-        <Comments/>
+ 
+        
       </div>
     </div>
   );

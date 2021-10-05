@@ -2,6 +2,8 @@ import React , {useState}from 'react'
 import { Button, TextareaAutosize, TextField } from '@material-ui/core'
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles'
+import { GET, GET_AUTH, POST_AUTH } from "../../../api/api";
+import  { useEffect } from 'react'
 
 const useStyles = makeStyles((theme) => ({
     
@@ -27,25 +29,31 @@ function Comments(props) {
 
     const classes = useStyles();
     const [comment,setComment] = useState('')
+    const [loading, setLoading] = React.useState(true);
+    const [comments, setComments] = React.useState([]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    // useEffect(() => {
+    //   setLoading(false);
+    //   const exe = async () => {
+    //     try {
+    //       // const { data } = await GET("getAllComments/{id}");
+    //       // console.log(data);
+    //       // setComments(data);
+    //       // setLoading(false);
+    //     } catch (e) {
+    //       console.log(e);
+    //     }
+    //   };
+    //   exe();
+    // }, []);
 
-        // const variables = { 
-        //     content: Comment,
-        //     writer: user.userData._id,
-        //     postId: props.postId   
-        //  }
+    // console.log(comments);
 
-        // axios.post('/api/comment/saveComment', variables)
-        // .then(response=> {
-        //     if(response.data.success) {
-        //         setComment("")
-        //         props.refreshFunction(response.data.result)
-        //     } else {
-        //         alert('Failed to save Comment')
-        //     }
-        // })
+    const handleSubmit = async(e) => {
+       
+     // const{ data} = await POST_AUTH(`addComment/${id}`)
+
+
     }
 
     return (
@@ -53,10 +61,7 @@ function Comments(props) {
             <br />
             <p> Comments</p>
             <hr />
-            {/* Comment Lists  */}
-            {console.log(props.CommentLists)}
-
-            {/* Root Comment Form */}
+          
             <form style={{ display: 'flex' }}>
                 <TextField
                   onChange={(e) =>setComment(e.target.value)} 

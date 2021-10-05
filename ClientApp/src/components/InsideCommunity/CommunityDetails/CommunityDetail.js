@@ -7,7 +7,7 @@ import downvote from '../../../images/down.png';
 import { Link, useHistory } from 'react-router-dom'
 import add from '../../../images/plus_white.png';
 
-export default function Post( post ) {
+export default function Community( community ) {
   const history=useHistory();
   const addtocommunity = async (e) =>{
     e.preventDefault()
@@ -29,7 +29,7 @@ export default function Post( post ) {
               alt=""
             />
             <span className="communityTitle">
-              {post.title}
+              {community.name}
               
             </span>
             
@@ -48,7 +48,7 @@ export default function Post( post ) {
       
         
         <div className="postCenter">
-          <div className="postText"> {post.description}</div>
+          <div className="postText"> {community.description}</div>
          
         </div>
   

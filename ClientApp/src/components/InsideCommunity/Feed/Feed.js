@@ -4,12 +4,13 @@ import axios from "axios"
 import "./feed.css";
 import Grid from '@material-ui/core/Grid';
 import CommunityDetail from "../CommunityDetails/CommunityDetail";
-
+import { useParams } from "react-router";
+import { GET } from '../../../api/api'
 
 export default function Feed() {
     const [loading, setLoading] = React.useState(true);
   const [posts, setPosts] = React.useState([]);
-
+  const [community, setCommunity] = React.useState([]);
 //   const req = async () => {
 //     const response = await axios.get("https://localhost:5001/thread").then(
 //         console.log("getting"))
@@ -18,13 +19,15 @@ export default function Feed() {
 //   }
 //   req()
 
+const { id } =useParams();
+console.log(id);
   useEffect(() => {
     setLoading(false);
     const exe = async () => {
       try {
-        const { data } = await axios.get("https://localhost:5001/thread");
+        const{data} = await GET(`community/${id}`);
         console.log(data);
-        setPosts(data);
+        setCommunity(data);
         setLoading(false);
       } catch (e) {
         console.log(e);
@@ -44,8 +47,8 @@ export default function Feed() {
       <div className="feedWrapper">
       <CommunityDetail
                     
-                    title="This is the title of the community"
-                    description="Community details Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet malesuada leo, ac aliquet nulla. Nulla eu nunc quis neque luctus tincidunt. Etiam eget justo eu lacus aliquet aliquet sed id sapien. Aenean hendrerit, lacus non venenatis tincidunt, magna quam blandit nulla, nec imperdiet ante est eget leo. Ut sed tellus nibh. Nullam volutpat fermentum ipsum, ut porta nisl sagittis quis. Morbi at rhoncus tortor, eget pellentesque lacus."
+                    name={community.name}
+                    description={community.description}
                     
                     
                   />

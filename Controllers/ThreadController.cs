@@ -200,15 +200,18 @@ namespace Clique.Controllers
 
 
         //Single Comment Add
-        //[Authorize]
+         [Authorize]
         [HttpPost]
         [Route("addComment/{id}")]
 
         public string addSingleComment([FromBody] Comment c, string id)
         {
+            Console.WriteLine( "inside add single comment" );
             Console.WriteLine(id);
             Console.WriteLine("comment " + c.Op_id);
             Console.WriteLine("comment " + c.Content);
+            var user = userCollection.Find(x => x.Id == _userId).FirstOrDefault();
+            c.Op_name = user.Username;
 
             c.Op_id = _userId;
             c.Post_id = id;
@@ -219,9 +222,10 @@ namespace Clique.Controllers
 
 
         //All comments view
+        
         [HttpGet]
         [Route("getAllComments/{id}")] // id = thread id
-        public List<Comment> GetAllComments(string id)
+        public IEnumerable<Comment> GetAllComments(string id)
         {
             var allComments = commentCollection.Find(x => x.Post_id == id).ToList();
 

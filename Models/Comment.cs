@@ -22,5 +22,8 @@ namespace Clique.Models
        public int Totalvote { get; set; }
         [BsonElement("report_no")]
        public int Report_no { get; set; }
+
+        [BsonElement("op_name")]
+       public string Op_name { get; set; }
     }
 }

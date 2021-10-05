@@ -9,13 +9,13 @@ import add from '../../../images/add.png';
 
 export default function Post( post ) {
   const history=useHistory();
-//   const gotopost = async (e) =>{
-//     e.preventDefault()
-//     history.push("/InsidePost");
+  const gotopost = async (e) =>{
+    e.preventDefault()
+    history.push("/InsidePost");
    
 
 
-// }
+}
 const gotologin = async (e) =>{
   e.preventDefault()
   history.push("/Signin");

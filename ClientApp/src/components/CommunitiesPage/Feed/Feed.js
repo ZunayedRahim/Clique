@@ -51,7 +51,10 @@ export default function Feed() {
                     title={post.name}
                     description={post.description}
                     image_Url={post.image_Url}
-                   
+                    id = {post.id}
+                    onClick = {()=>{
+                      window.location.href=`/CommunityDetails/${post.id}`
+                    }}
                     
                   />
                    ))} 

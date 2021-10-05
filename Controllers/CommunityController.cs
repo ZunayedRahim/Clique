@@ -75,6 +75,26 @@ namespace Clique.Controllers
             }
             return Ok(communities);
         }
+
+
+        
+        // GET /[community]/:id
+        [HttpGet]
+        [Route("{id}")]
+        async public Task<ActionResult> GetCommunityById(string id)
+        {
+
+            Console.WriteLine("community id: " + id);
+
+            Community community = await _blogService.GetCommunityById(id);
+            Console.WriteLine("here");
+
+            if (community == null)
+            {
+                return new BadRequestObjectResult(new ErrorResult("Internal Server Error", 400, "Something is wrong"));
+            }
+            return Ok(community);
+        }
     }
 
    

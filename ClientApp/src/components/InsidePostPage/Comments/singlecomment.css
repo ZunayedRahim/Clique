@@ -1,0 +1,42 @@
+.postBottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.postBottomLeft{
+    display: flex;
+    align-items: center;   
+}
+
+.likeIcon{
+    width: 13px;
+    height: 13px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.likeIconreply{
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.reply{
+    width: 15px;
+    height: 15px;
+    margin-left: 35px;
+    cursor: pointer;
+}
+
+.postLikeCounter{
+    font-size: 15px;
+}
+
+.postCommentText{
+    cursor: pointer;
+    border-bottom: 1px dashed gray;
+    font-size: 15px;
+}

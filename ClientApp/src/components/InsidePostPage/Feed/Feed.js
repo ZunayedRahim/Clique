@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
       borderColor: "red",
     }
 
+  },
+  commentsubmitbg:
+  {
+      backgroundColor: "white",
   }
 }));
 
@@ -132,21 +136,8 @@ console.log(id);
                     
                   />
 
-          {comments.map((comment) =>
-          (
-            <SingleComment
-
-
-              content= {comment.content}
-              op_name={comment.op_name}
-
-
-/>
-          ))}
-
-
-          <div>
-            <br />
+            <div classname="commentsubmitbg">
+           
             <p> Comments</p>
             <hr />
           
@@ -171,6 +162,22 @@ console.log(id);
             </form>
 
         </div>
+
+          {comments.map((comment) =>
+          (
+            <SingleComment
+
+
+              content= {comment.content}
+              op_name={comment.op_name}
+              id={comment.id}
+
+
+/>
+          ))}
+
+
+
 
                  
                    

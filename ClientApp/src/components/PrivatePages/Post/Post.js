@@ -13,9 +13,13 @@ import axios from "axios";
 export default function Post( post ) {
   const {id } =useParams();
   console.log(id);
-
+  const [count, setCount] = useState(0);
   const [upvoteCount,setUpvoteCount] = useState('');
   const [downvoteCount,setDownvoteCount] = useState('');
+
+  setCount(post.upvote);
+
+  
  
 //   const Getpostid = async (e) =>{
 //     e.preventDefault()
@@ -29,6 +33,8 @@ export default function Post( post ) {
 
 // }
 
+
+
 const OnClickUpvote = async() =>{
   // e.preventDefault();
   
@@ -38,12 +44,15 @@ console.log("inside upvote");
   const{data} = await GET_AUTH(`thread/addUpvote/${post.id}`);
   console.log(data);
   setUpvoteCount(data);
-  post.upvote = data;
+  setCount(data);
+
+  
+  
 
 }
 
 
-const OnClickDownvote = async() =>{
+const OnClickDownvote = async(e) =>{
   // e.preventDefault();
   
 console.log("inside downvote");
@@ -52,6 +61,7 @@ console.log("inside downvote");
   const{data} = await GET_AUTH(`thread/addDownvote/${post.id}`);
   console.log(data);
   setDownvoteCount(data);
+  e.target.setAttribute(upvoteCount);
   
 }
   return (
@@ -96,7 +106,7 @@ console.log("inside downvote");
          <div className="postBottom">
           <div className="postBottomLeft">
             <img className="likeIcon" src={upvote} alt="" onClick={OnClickUpvote}/>
-            <span className="postLikeCounter">{post.upvote}</span>
+            <span id="upvotespan" className="postLikeCounter">{count}</span>
             <img className="likeIcon" src={downvote}  alt="" onClick = {OnClickDownvote}/>
             <span className="postLikeCounter">{post.downvote}</span>
           </div>

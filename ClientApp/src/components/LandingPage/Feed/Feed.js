@@ -5,9 +5,20 @@ import "./feed.css";
 import Grid from '@material-ui/core/Grid';
 import Sort from "../Sort/Sort";
 import { GET, GET_AUTH } from "../../../api/api";
+import {  useHistory } from 'react-router-dom'
+import New from '../../../images/sticker.png'
+import Trend from '../../../images/trend.png'
+import Top from '../../../images/arrow-up.png'
+
+
 export default function Feed() {
     const [loading, setLoading] = React.useState(true);
   const [posts, setPosts] = React.useState([]);
+  const [newposts, setNewPosts] = React.useState([]);
+  const [topposts, setTopPosts] = React.useState([]);
+  const [top, setTop] = React.useState(false);
+  const [newp, setNewp] = React.useState(false);
+  const history=useHistory();
 
 //   const req = async () => {
 //     const response = await axios.get("https://localhost:5001/thread").then(
@@ -36,12 +47,64 @@ export default function Feed() {
     return <p>Loading...</p>;
   }
 
+  function createpost(){
+    history.push("/SeeCommunities")
+
+}
+function gotocommunities(){
+    history.push("/SeeCommunities")
+
+}
+
+const newClicked = async(e) => {
+    e.preventDefault();
+    const{ data} = await GET("thread/privatethreadByNew")
+    console.log(data);
+    setNewPosts(data);
+    setPosts(data);
+    setNewp(true);
+
+
+
+    
+
+  
+}
+
+const topClicked = async(e) => {
+    e.preventDefault();
+    const{ data} = await GET("thread/privatethreadByTop")
+    console.log(data);
+    setTopPosts(data);
+    setPosts(data);
+    setTop(true);
+}
+
 
 
   return (
     <div className="feed">
       <div className="feedWrapper">
-      <Sort/>
+      <div className="share">
+    <div className="shareWrapper">
+      <div className="shareBottom">
+          <div className="options">
+              
+          <div className="option">
+              <img src={New} alt="" className="optionIcon" onClick={newClicked}/>
+                  <span className="optionText">New</span>
+              </div>
+              <div className="option">
+              <img src={Top} alt="" className="optionIcon" onClick={topClicked}/>
+                  <span className="optionText">Top</span>
+              </div>
+             
+              
+          </div>
+          <button className="addButton" onClick={createpost}>See Communities</button>
+      </div>
+    </div>
+  </div>
        {posts.map((post) => (
                
                   <Post

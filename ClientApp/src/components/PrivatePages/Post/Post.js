@@ -113,15 +113,18 @@ console.log("inside downvote");
               
             </span>
             
-            <span className="postDate"> {post.created_at}</span>
+           
           </div>
           <div className="postTopRight">
           
           </div>
       
         </div>
-        <div className="postTopDown">
-        <span className="postCommunity">
+        <div className="postTopDownP">
+       
+        <span className="postDate"> {post.created_at}</span>
+        <br/>
+        <span className="postCommunityP">
               c/{post.community_name}
               
             </span>

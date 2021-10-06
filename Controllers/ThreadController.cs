@@ -407,7 +407,7 @@ namespace Clique.Controllers
         
         //New : latest threads
 
-        [Authorize]
+        
         [HttpGet]
         [Route("privatethreadByNew")]
         public IEnumerable<Thread> GetPrivateThreadByNew()
@@ -425,7 +425,7 @@ namespace Clique.Controllers
 
         //Top : top voted threads
          //View all private threads
-        [Authorize]
+        
         [HttpGet]
         [Route("privatethreadByTop")]
         public IEnumerable<Thread> GetPrivateThreadByTop()

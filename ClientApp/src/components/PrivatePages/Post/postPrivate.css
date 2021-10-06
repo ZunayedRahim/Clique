@@ -21,17 +21,18 @@
     align-items: center;
     justify-content: space-between;
   }
-  .postTopDown {
+  .postTopDownP {
    
+    margin-left:40px;
     align-items: center;
     justify-content: space-between;
     margin-top:-8px;
   }
-  .postCommunity {
+  .postCommunityP {
     font-size: 12px;
     font-weight: 300;
-    margin-left:40px;
-    margin-bottom: 10px;
+
+    
   }
   
   .postTopLeft {
@@ -52,8 +53,9 @@
     margin: 0 10px;
   }
   
-  .postDate{
+  .postDateP{
       font-size: 12px;
+      margin-left:40px;
   }
   
   .postCenter{

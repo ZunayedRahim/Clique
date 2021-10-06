@@ -9,6 +9,9 @@ import downvote from '../../../images/down.png';
 import { useParams } from "react-router";
 import { GET, GET_AUTH, POST } from "../../../api/api";
 import axios from "axios";
+import React, { useEffect } from 'react'
+
+
 
 export default function Post( post ) {
   const {id } =useParams();
@@ -16,9 +19,39 @@ export default function Post( post ) {
   const [count, setCount] = useState(0);
   const [upvoteCount,setUpvoteCount] = useState('');
   const [downvoteCount,setDownvoteCount] = useState('');
+  const [loading, setLoading] = React.useState(true);
+ 
+  useEffect(() => {
+    setLoading(false);
+    const exe = async () => {
+      try {
+        const { data } = await GET_AUTH(`thread/addUpvote/${post.id}`);
+        console.log(data);
+        
+        setUpvoteCount(data);
+        setLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    exe();
+  }, []);
 
-  setCount(post.upvote);
-
+  useEffect(() => {
+    setLoading(false);
+    const exe = async () => {
+      try {
+        const { data } = await GET_AUTH(`thread/addDownvote/${post.id}`);
+        console.log(data);
+        
+        setDownvoteCount(data);
+        setLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    exe();
+  }, []);
   
  
 //   const Getpostid = async (e) =>{
@@ -44,7 +77,7 @@ console.log("inside upvote");
   const{data} = await GET_AUTH(`thread/addUpvote/${post.id}`);
   console.log(data);
   setUpvoteCount(data);
-  setCount(data);
+  //setCount(data);
 
   
   
@@ -61,7 +94,7 @@ console.log("inside downvote");
   const{data} = await GET_AUTH(`thread/addDownvote/${post.id}`);
   console.log(data);
   setDownvoteCount(data);
-  e.target.setAttribute(upvoteCount);
+ 
   
 }
   return (
@@ -106,9 +139,9 @@ console.log("inside downvote");
          <div className="postBottom">
           <div className="postBottomLeft">
             <img className="likeIcon" src={upvote} alt="" onClick={OnClickUpvote}/>
-            <span id="upvotespan" className="postLikeCounter">{count}</span>
+            <span id="upvotespan" className="postLikeCounter">{upvoteCount}</span>
             <img className="likeIcon" src={downvote}  alt="" onClick = {OnClickDownvote}/>
-            <span className="postLikeCounter">{post.downvote}</span>
+            <span className="postLikeCounter">{downvoteCount}</span>
           </div>
           <div className="postBottomRight">
             <span className="postCommentText">{post.comment} comments</span>

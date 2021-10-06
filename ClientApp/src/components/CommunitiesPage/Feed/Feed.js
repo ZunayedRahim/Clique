@@ -51,11 +51,14 @@ export default function Feed() {
                     title={post.name}
                     description={post.description}
                     image_Url={post.image_Url}
+                    name={post.name}
                     id = {post.id}
 
                     onClick = {()=>{
                       console.log(post.id);
-                       window.location.href=`/CommunityDetails/${post.id}`
+                      localStorage.getItem("access_token") != null
+                      ?( window.location.href=`/CommunityDetails/${post.id}`)
+                      :(window.location.href="/Signin");
                     }}
                     
                   />

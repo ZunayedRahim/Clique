@@ -6,13 +6,21 @@ import upvote from '../../../images/upvote.png';
 import downvote from '../../../images/down.png';
 import { Link, useHistory } from 'react-router-dom'
 import add from '../../../images/plus_white.png';
+import post from '../../../images/writing.png';
 
 export default function Community( community ) {
   const history=useHistory();
+  console.log(community.id+" check");
   const addtocommunity = async (e) =>{
     e.preventDefault()
-    //history.push("/InsidePost");
-   
+    
+
+
+}
+
+const postToCommunity = async (e) =>{
+  e.preventDefault()
+  window.location.href=`/NewPost/${community.id}`;
 
 
 }
@@ -25,7 +33,7 @@ export default function Community( community ) {
           <div className="postTopLeft">
             <img
               className="communityImage"
-              src={profilepic}
+              src={community.image_Url}
               alt=""
             />
             <span className="communityTitle">
@@ -37,7 +45,13 @@ export default function Community( community ) {
           </div>
           <div className="postTopRight">
           <img
-              className="postProfileImg"
+              className="img1"
+              src={post}
+              alt=""
+              onClick={postToCommunity}
+            />
+          <img
+              className="img2"
               src={add}
               alt=""
               onClick={addtocommunity}

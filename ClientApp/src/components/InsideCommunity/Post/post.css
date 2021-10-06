@@ -123,16 +123,17 @@
     align-items: center;
     justify-content: space-between;
   }
-  .postTopDown {
+  .postTopDownCom {
    
     align-items: center;
     justify-content: space-between;
     margin-top:-8px;
+    height: 30px;
+    margin-left:40px;
   }
-  .postCommunity {
+  .postCommunityCom {
     font-size: 12px;
     font-weight: 300;
-    margin-left:40px;
     margin-bottom: 10px;
   }
   
@@ -198,9 +199,9 @@
       font-size: 15px;
   }
   
-  .postCommentText{
+  .postCommentTextCom{
       cursor: pointer;
-      border-bottom: 1px dashed gray;
+      
       font-size: 15px;
   }
   .hrstyle{

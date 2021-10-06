@@ -14,6 +14,7 @@ import man from '../images/rsz_createpost.jpg';
 import logo from '../images/clique_logo.PNG';
 import { Link, useHistory } from 'react-router-dom'
 import axios from "axios"
+import { useParams } from "react-router";
 
 import { FormControl, InputLabel, MenuItem, Select, useFormControl } from '@material-ui/core'
 
@@ -109,6 +110,9 @@ function NewPost()
   const [filename, setFilename] = React.useState(null);
   const [form, setForm] = React.useState(null);
   const [alert, setAlert] = React.useState(null);
+  const {id} =useParams();
+  console.log(id+" Ckeck Create?");
+
 
   useEffect(() => {
     if (file) {
@@ -150,56 +154,61 @@ function NewPost()
         // form.imageURL = file;
         // console.log(form);
         console.log(titlein,detailsin);
-        const { data } = await POST_AUTH("thread/add/615ab6217e38c58165a85656", 
-          {
-            title: titlein,
-            description: detailsin,
-            imageURL: "img.url",
-            upvote: 0,
-            downvote : 0,
-            totalVote : 0,
-            comment_id : "232323",
-            report_count: 0, 
-            community_id : "615ab6217e38c58165a85656",
-            community_name : "",
-            thread_type : "public",
+        // const { data } = await POST_AUTH(`thread/add/${id}`, 
+        //   {
+        //     title: titlein,
+        //     description: detailsin,
+        //     imageURL: "img.url",
+        //     upvote: 0,
+        //     downvote : 0,
+        //     totalVote : 0,
+        //     comment_id : "232323",
+        //     report_count: 0, 
+        //     community_id : "615ab6217e38c58165a85656",
+        //     community_name : "",
+        //     thread_type : "public",
             
 
-          }
-          );
-          console.log(data);
-          history.push("/PrivatePage")
-
-        // try {
-        //   var formData = new FormData();
-        //   formData.append("title", form.title);
-        //   formData.append("description", form.description);
-        //   formData.append("imageURL", "img.url");
-        //   formData.append("upvote",0);
-        //   formData.append("downvote",0);
-        //   formData.append("totalVote",0);
-        //   formData.append("oP_id","123123");
-        //   formData.append("oP_name","nafisha");
-        //   formData.append("comment_id","232323");
-        //   formData.append("report_count",0);
-         
-    
-          
-
-          
-    
-        // //   if (data.statusCode === 200) {
-        // //     setAlert(null);
-        // //     window.location.href = "/";
-        // //   }
-        // } catch (e) {
-        //   console.log(e);
-        //   if (e.response) {
-        //     setAlert("something");
-        //   } else {
-        //     console.log("server didnt respond");
         //   }
-        // }
+        //   );
+        //   console.log(data);
+        //   history.push("/PrivatePage")
+
+        try {
+          var formData = new FormData();
+          formData.append("title", form.title);
+          formData.append("description", form.description);
+          formData.append("coverphoto", file);
+          formData.append("upvote",0);
+          formData.append("downvote",0);
+          formData.append("totalVote",0);
+          formData.append("community_id",id);
+          formData.append("community_name","nafisha");
+          formData.append("thread_type","public");
+          formData.append("report_count",0);
+          formData.append("imageURL","img.url");
+         
+
+          console.log(formData);
+
+          const { data } = await POST_AUTH(`thread/add/${id}`,formData);
+          console.log(data);
+    
+          
+
+          
+    
+          if (data.statusCode === 200) {
+            console.log("success thread");
+          }
+        } catch (e) {
+          console.log(e);
+          if (e.response) {
+            setAlert("something");
+          } else {
+            console.log("server didnt respond");
+          }
+        }
       };
 
     return(
@@ -215,7 +224,7 @@ function NewPost()
 
             <form className={classes.form} noValidate >
             <TextField
-               onChange={(e) =>setTitlein(e.target.value)}
+               onChange={onInputChange}
               variant="outlined"
               margin="normal"
               required
@@ -229,7 +238,7 @@ function NewPost()
             //  className={classes.submit}
             />
             <TextField
-              onChange={(e) =>setDetailsin(e.target.value)}
+              onChange={onInputChange}
               variant="outlined"
               margin="normal"
               required
@@ -244,7 +253,7 @@ function NewPost()
               error={detailsError}
               
             />
-             {/* <div style={{ marginTop: "var(--margin-item-spacing)" }}>
+             <div style={{ marginTop: "var(--margin-item-spacing)" }}>
                 <input
                   accept="image/*"
                  className={classes.input}
@@ -264,22 +273,8 @@ function NewPost()
                      Select photo to upload
                   </Button>
                 </label>
-              </div> */}
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-required-label">Select a community</InputLabel>
-                <Select
-                labelId="demo-simple-select-helper-label"
-                id="demo-simple-select-required"
-                onChange={handleChange}
-                label="Select a community"
-                className={classes.select}
-               
-                >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
+              </div>
+              
 
 
              <Button

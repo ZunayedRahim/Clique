@@ -39,7 +39,7 @@ class App extends Component{
       <Route exact path="/Signup" component={Signup}></Route>
       <Route exact path="/ForgotPassword" component={ForgotPass}></Route>
       <Route exact path="/Signin" component={Signin}></Route>
-      <Route exact path="/NewPost" component={NewPost}></Route>
+      <Route exact path="/NewPost/:id" component={NewPost}></Route>
 
       <Route exact path="/UserProfile" component={UserProfile}></Route>
       <Route exact path="/UserProfileEdit" component={UserProfileEdit}></Route>

@@ -130,6 +130,7 @@ console.log(id);
                     description={posts.description}
                     upvote={posts.upvote}
                     downvote={posts.downvote}
+                    id={posts.id}
                     
                     commentname="John wick"
                     comment="This is my first comment"

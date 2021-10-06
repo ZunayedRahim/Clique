@@ -8,6 +8,8 @@ import downvote from '../../../images/down.png';
 import Comments from "../Comments/CreateComment";
 import { Button, TextareaAutosize, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import React, { useEffect } from 'react'
+import { GET, GET_AUTH, POST } from "../../../api/api";
 
 const useStyles = makeStyles((theme) => ({
     
@@ -31,9 +33,90 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Post( post ) {
   const classes = useStyles();
-  const [comment,setComment] = useState('');
+  const [werty,qwertyuhjk] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [up,setUp] = useState('');
+  const [down,setDown] = useState('');
+
+  console.log(post.id);
 
 
+  useEffect(() => {
+    setLoading(false);
+    const exe = async () => {
+      try {
+        const { data } = await GET_AUTH(`thread/addUpvote/${post.id}`);
+        console.log(data);
+        console.log(post.id);
+        setUp(data);
+        setLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    exe();
+  }, []);
+
+  useEffect(() => {
+    setLoading(false);
+    const exe = async () => {
+      try {
+        const { data } = await GET_AUTH(`thread/addDownvote/${post.id}`);
+        console.log(data);
+        
+        setDown(data);
+        setLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    exe();
+  }, []);
+  
+ 
+//   const Getpostid = async (e) =>{
+//     e.preventDefault()
+    
+//     const{data} = await axios.get(`https://localhost:5001/thread/${id}`);
+//     console.log("id"+data);
+    
+    
+ 
+
+
+// }
+
+
+
+const OnClickUpvote = async() =>{
+  // e.preventDefault();
+  
+console.log("inside upvote");
+  console.log(post.id);
+  // const{data} = await GET(`thread/addUpvote/${post.id}`);
+  const{data} = await GET_AUTH(`thread/addUpvote/${post.id}`);
+  console.log(data);
+  setUp(data);
+  //setCount(data);
+
+  
+  
+
+}
+
+
+const OnClickDownvote = async(e) =>{
+  // e.preventDefault();
+  
+console.log("inside downvote");
+  console.log(post.id);
+  // const{data} = await GET(`thread/addDownvote/${post.id}`);
+  const{data} = await GET_AUTH(`thread/addDownvote/${post.id}`);
+  console.log(data);
+  setDown(data);
+ 
+  
+}
   
 
   return (
@@ -74,16 +157,16 @@ export default function Post( post ) {
           <div className="postText"> 
           {post.description}
           </div>
-          <img className="postImg" src={post.image} alt="" />
+          <img className="postImg" src={post.image} alt="" onClick={OnClickUpvote}/>
         </div>
          <div className="postBottom">
           <div className="postBottomLeft">
-            <img className="likeIcon" src={upvote} alt="" />
+            <img className="likeIcon" src={upvote} alt="" onClick={OnClickDownvote}/>
             <span className="postLikeCounter">
-            {post.upvote}
+            {up}
             </span>
             <img className="likeIcon" src={downvote}  alt=""/>
-            <span className="postLikeCounter">{post.downvote}</span>
+            <span className="postLikeCounter">{down}</span>
           </div>
          
         </div>

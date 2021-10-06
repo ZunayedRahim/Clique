@@ -51,9 +51,15 @@ export default function Feed() {
                     upvote={post.upvote}
                     downvote={post.downvote}
                     image={post.image}
+                    community_name={post.community_name}
+                    created_at = {post.created_at}
                     id = {post.id}
                     onClick = {()=>{
-                      window.location.href=`/InsidePost/${post.id}`
+                      localStorage.getItem("access_token") != null
+                      ?(window.location.href=`/InsidePost/${post.id}`)
+                      :(window.location.href="/Signin");
+                      
+                     
                     }}
                   />
                    ))} 

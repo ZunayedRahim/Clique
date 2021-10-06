@@ -28,10 +28,11 @@
       align-items: center;
       justify-content: space-between;
       margin-top:-8px;
+      height: 30px;
       background-color: #2E3B43;
       border-radius: 0px 0px 10px 10px;
     }
-    .postCommunity {
+    .postCommunityC {
       font-size: 12px;
       font-weight: 300;
       margin-left:40px;

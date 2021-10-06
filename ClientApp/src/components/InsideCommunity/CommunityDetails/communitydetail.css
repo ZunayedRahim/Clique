@@ -57,12 +57,20 @@
      
   }
   
-  .postImg{
-      margin-top: 20px;
-      width: 100%;
-      max-height: 500px;
+  .img1{
+     
+      width: 40px;
+      height:40px;
+      
       object-fit: contain;
   }
+  .img2{
+     
+    width: 35px;
+    height:35px;
+    margin-bottom: 5px;
+    object-fit: contain;
+}
   .postText{
     font-weight: 500;
     display: inline-block;

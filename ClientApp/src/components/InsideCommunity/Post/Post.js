@@ -4,10 +4,13 @@ import profilepic from '../../../images/reaper.png';
 import { useState } from "react";
 import upvote from '../../../images/upvote.png';
 import downvote from '../../../images/down.png';
+import man from '../../../images/man.jpg';
 import { Link, useHistory } from 'react-router-dom'
 
 export default function Post( post ) {
   const history=useHistory();
+
+  console.log(post.imageURL+" Image loading?")
   const gotopost = async (e) =>{
     e.preventDefault()
     history.push("/InsidePost");
@@ -18,7 +21,7 @@ export default function Post( post ) {
   
   return (
       
-    <div className="postLanding" onClick={gotopost}>
+    <div className="postLanding" onClick={post.onClick}>
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
@@ -32,23 +35,25 @@ export default function Post( post ) {
               
             </span>
             
-            <span className="postDate"> 24 September,2021, 1:33pm</span>
+           
           </div>
           <div className="postTopRight">
             <MoreVert />
           </div>
       
         </div>
-        <div className="postTopDown">
-        <span className="postCommunity">
-              c/keeanureeves
+        <div className="postTopDownCom">
+        <span className="postDate">{post.created_at}</span>
+        <br/>
+        <span className="postCommunityCom">
+              c/{post.community_name}
               
             </span>
         </div>
         
         <div className="postCenter">
           <div className="postText"> {post.description}</div>
-          <img className="postImg" src={post.image} alt="" />
+          <img className="postImg" src={post.imageURL} alt="" />
         </div>
          <div className="postBottom">
           <div className="postBottomLeft">
@@ -58,7 +63,7 @@ export default function Post( post ) {
             <span className="postLikeCounter">{post.downvote}</span>
           </div>
           <div className="postBottomRight">
-            <span className="postCommentText">{post.comment} comments</span>
+            <span className="postCommentTextCom">comments</span>
           </div>
         </div> 
       </div>

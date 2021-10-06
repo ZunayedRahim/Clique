@@ -282,13 +282,13 @@ namespace Clique.Controllers
 
             }
 
-            var upvotedComment = threadCollection.Find(x => x.Id == v.PostId).FirstOrDefault();
+            var upvotedComment = commentCollection.Find(x => x.Id == v.PostId).FirstOrDefault();
             var upvoteNumber = upvotedComment.Upvote;
             return upvoteNumber;
         }
 
 
-        //Single Comment Upvote
+        //Single Comment Downvote
         //[Authorize]
         [HttpGet]
         [Route("addDownvoteComment/{id}")]
@@ -353,6 +353,92 @@ namespace Clique.Controllers
             return allReply;
         }
 
+        //Single Reply Upvote
+        [Authorize]
+        [HttpGet]
+        [Route("addUpvoteReply/{id}")] // id = commentId
+        public int AddUpvoteReply(string id)
+        {
+
+            Voting v = new Voting();
+            v.PostId = id;
+            v.UserId = _userId;
+            Console.WriteLine(v.UserId);
+            Console.WriteLine("UID inside upvote reply" + _userId);
+            v.Type = "upvote";
+            var existingUser = votingCollection.Find(x => x.PostId == v.PostId && x.UserId == v.UserId && x.Type == "upvote").FirstOrDefault();
+            if (existingUser == null)
+            {
+                Console.WriteLine("Didn't upvote previously");
+                votingCollection.InsertOne(v);
+
+                var filter = Builders<Comment>.Filter.Eq("Id", v.PostId);
+                var update = Builders<Comment>.Update.Inc("upvote", 1);
+
+                commentCollection.UpdateOne(filter, update);
+            }
+            else
+            {
+                Console.WriteLine("upvoted previously");
+                var filter = Builders<Voting>.Filter.Eq("PostId", v.PostId);
+                filter &= (Builders<Voting>.Filter.Eq("UserId", v.UserId));
+                votingCollection.DeleteMany(filter);
+
+                var filter2 = Builders<Comment>.Filter.Eq("Id", v.PostId);
+                var update = Builders<Comment>.Update.Inc("upvote", -1);
+
+                commentCollection.UpdateOne(filter2, update);
+
+            }
+
+            var upvotedComment = commentCollection.Find(x => x.Id == v.PostId).FirstOrDefault();
+            var upvoteNumber = upvotedComment.Upvote;
+            return upvoteNumber;
+        }
+
+
+        //Single Reply Downvote
+        //[Authorize]
+        [HttpGet]
+        [Route("addDownvoteReply/{id}")]    // id = commentId
+        public int AddDownvoteReply(string id)
+        {
+
+            Voting v = new Voting();
+            v.PostId = id;
+            v.UserId = _userId;
+            Console.WriteLine(v.UserId);
+            Console.WriteLine("UID inside downvote reply" + _userId);
+            v.Type = "downvote";
+            var existingUser = votingCollection.Find(x => x.PostId == v.PostId && x.UserId == v.UserId && x.Type == "downvote").FirstOrDefault();
+            if (existingUser == null)
+            {
+                Console.WriteLine("Didn't downvote reply previously");
+                votingCollection.InsertOne(v);
+
+                var filter = Builders<Comment>.Filter.Eq("Id", v.PostId);
+                var update = Builders<Comment>.Update.Inc("downvote", 1);
+
+                commentCollection.UpdateOne(filter, update);
+            }
+            else
+            {
+                Console.WriteLine("upvoted previously");
+                var filter = Builders<Voting>.Filter.Eq("PostId", v.PostId);
+                filter &= (Builders<Voting>.Filter.Eq("UserId", v.UserId));
+                votingCollection.DeleteMany(filter);
+
+                var filter2 = Builders<Comment>.Filter.Eq("Id", v.PostId);
+                var update = Builders<Comment>.Update.Inc("downvote", -1);
+
+                commentCollection.UpdateOne(filter2, update);
+
+            }
+
+            var downvotedComment = commentCollection.Find(x => x.Id == v.PostId).FirstOrDefault();
+            var downvoteNumber = downvotedComment.Downvote;
+            return downvoteNumber;
+        }
         //Report thread
         // [Authorize]
         [HttpPost]
@@ -382,20 +468,6 @@ namespace Clique.Controllers
         
         //Trending : top voted threads last day
 
-        // [Authorize]
-        // [HttpGet]
-        // [Route("privatethreadByNew")]
-        // public IEnumerable<Thread> GetPrivateThreadByNew()
-        // {
-
-        //     Console.WriteLine("uid:" + _userId);
-        //     // var threadTop = threadCollection.Find(s => true).SetSortOrder(SortBy.Descending("upvote"));
-
-        //     var sort = Builders<Thread>.Sort.Descending("created_at");
-        //     var threadTop = threadCollection.Find(s=>s.Thread_type == "private" || s.Thread_type=="public").Sort(sort).ToList();
-
-        //     return threadTop;
-        // }
         
         //New : latest threads
 
@@ -430,6 +502,18 @@ namespace Clique.Controllers
             var threadTop = threadCollection.Find(s=>s.Thread_type == "private" || s.Thread_type=="public").Sort(sort).ToList();
 
             return threadTop;
+        }
+
+        //Searching Threads
+        [HttpGet]
+        [Route("searchThread/{id}")]
+        public IEnumerable<Thread> GetThreadsBySearch(string id)
+        {
+            Console.WriteLine("Search string: "+id);
+
+           
+
+            return threadCollection.Find(x=>x.Title == id).ToList();
         }
 
 

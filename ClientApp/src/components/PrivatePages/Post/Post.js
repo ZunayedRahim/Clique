@@ -113,28 +113,23 @@ console.log("inside downvote");
               
             </span>
             
-            <span className="postDate"> 24 September,2021, 1:33pm</span>
+            <span className="postDate"> {post.created_at}</span>
           </div>
           <div className="postTopRight">
-          <img
-              className="postProfileImg"
-              src={add}
-              alt=""
-              //onClick={gotologin}
-            />
+          
           </div>
       
         </div>
         <div className="postTopDown">
         <span className="postCommunity">
-              c/keeanureeves
+              c/{post.community_name}
               
             </span>
         </div>
         
         <div className="postCenter" onClick={post.onClick}>
           <div className="postText"> {post.description}</div>
-          <img className="postImg" src={post.image} alt="" />
+          <img className="postImg" src={post.imageURL} alt="" />
         </div>
          <div className="postBottom">
           <div className="postBottomLeft">

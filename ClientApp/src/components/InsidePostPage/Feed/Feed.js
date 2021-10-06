@@ -131,9 +131,10 @@ console.log(id);
                     upvote={posts.upvote}
                     downvote={posts.downvote}
                     id={posts.id}
+                    imageURL={posts.imageURL}
+                    community_name={posts.community_name}
+                    created_at={posts.created_at}
                     
-                    commentname="John wick"
-                    comment="This is my first comment"
                     
                   />
 

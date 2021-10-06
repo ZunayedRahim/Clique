@@ -11,13 +11,7 @@ export default function Post( post ) {
   const history=useHistory();
 
   console.log(post.imageURL+" Image loading?")
-  const gotopost = async (e) =>{
-    e.preventDefault()
-    history.push("/InsidePost");
-   
-
-
-}
+  
   
   return (
       

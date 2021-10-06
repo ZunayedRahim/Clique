@@ -7,12 +7,24 @@ import downvote from '../../../images/down.png';
 import { Link, useHistory } from 'react-router-dom'
 import add from '../../../images/plus_white.png';
 import post from '../../../images/writing.png';
+import { GET, GET_AUTH, POST_AUTH } from "../../../api/api";
 
 export default function Community( community ) {
   const history=useHistory();
-  console.log(community.id+" check");
+  console.log(community.id+" check"+community.category);
   const addtocommunity = async (e) =>{
     e.preventDefault()
+
+    const{ data} = await POST_AUTH("community/joinCommunity",
+    {
+      community_id:community.id,
+      community_type:community.category,
+      user_id:" ",
+    }
+    )
+
+    console.log(data+"Join success");
+   
     
 
 

@@ -130,14 +130,18 @@ namespace Clique.Service
                 var projection = Builders<Thread>.Projection.
                     Include("title").
                     Include("description").
-                    Include("image_src").
+                    Include("imageURL").
                     Include("upvote").
                     Include("downvote").
                     Include("totalvote").
                     Include("op_id").
                     Include("op_name").
                     Include("comment_id").
-                    Include("report_count");
+                    Include("report_count").
+                    Include("coverphoto").
+                    Include("community_name").
+                    Include("created_at").
+                    Include("thread_type");
                 Console.WriteLine("blogservice");
                 var result = await _threadCollection.Find(filter).Project(projection).FirstOrDefaultAsync();
                 Thread thread = BsonSerializer.Deserialize<Thread>(result);

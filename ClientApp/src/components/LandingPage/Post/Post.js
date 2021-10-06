@@ -51,7 +51,7 @@ const gotologin = async (e) =>{
         
         <div className="postCenter" onClick={post.onClick}>
           <div className="postText"> {post.description}</div>
-          <img className="postImg" src={post.image} alt="" />
+          <img className="postImg" src={post.imageURL} alt="" />
         </div>
          <div className="postBottom">
           <div className="postBottomLeft">

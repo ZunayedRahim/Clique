@@ -4,6 +4,7 @@ import New from '../../../images/sticker.png'
 import Trend from '../../../images/trend.png'
 import Top from '../../../images/arrow-up.png'
 import {  useHistory } from 'react-router-dom'
+import { GET, GET_AUTH } from "../../../api/api";
 
 export default function Sort() {
     const history=useHistory();
@@ -11,17 +12,16 @@ export default function Sort() {
         history.push("/SeeCommunities")
 
     }
+
+   
   return (
     <div className="share">
     <div className="shareWrapper">
       <div className="shareBottom">
           <div className="options">
-              <div className="option"> 
-                  <img src={Trend} alt="" className="optionIcon"/>
-                  <span className="optionText">Trending</span>
-              </div>
+              
               <div className="option">
-              <img src={New} alt="" className="optionIcon"/>
+              <img src={New} alt="" className="optionIcon" />
                   <span className="optionText">New</span>
               </div>
               <div className="option">

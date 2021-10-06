@@ -39,7 +39,7 @@ export default function Feed() {
     return <p>Loading...</p>;
   }
 
-
+  
 
   return (
     <div className="feed">
@@ -53,7 +53,9 @@ export default function Feed() {
                     description={post.description}
                     upvote={post.upvote}
                     downvote={post.downvote}
-                    image={post.image}
+                    imageURL={post.imageURL}
+                    community_name={post.community_name}
+                    created_at={post.created_at}
                     id = {post.id}
                     onClick = {()=>{
                       window.location.href=`/InsidePost/${post.id}`

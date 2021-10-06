@@ -68,6 +68,7 @@ console.log(id);
                     description={community.description}
                     image_Url={community.image_Url}
                     id={community.id}
+                    category={community.category}
                     
                     
                   />

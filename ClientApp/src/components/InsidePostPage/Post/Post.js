@@ -1,5 +1,5 @@
 import "./post.css";
-import { MoreVert } from "@material-ui/icons";
+import { MoreVert, PostAddSharp } from "@material-ui/icons";
 import profilepic from '../../../images/reaper.png';
 import add from '../../../images/add.png';
 import { useState } from "react";
@@ -135,20 +135,16 @@ console.log("inside downvote");
               
             </span>
             
-            <span className="postDate"> 24 September,2021, 1:33pm</span>
+            <span className="postDate"> {post.created_at}</span>
           </div>
           <div className="postTopRight">
-          <img
-              className="postProfileImg"
-              src={add}
-              alt=""
-            />
+          
           </div>
       
         </div>
         <div className="postTopDown">
         <span className="postCommunity">
-              c/keeanureeves
+              c/{post.community_name}
               
             </span>
         </div>
@@ -157,7 +153,7 @@ console.log("inside downvote");
           <div className="postText"> 
           {post.description}
           </div>
-          <img className="postImg" src={post.image} alt="" onClick={OnClickUpvote}/>
+          <img className="postImg" src={post.imageURL} alt="" onClick={OnClickUpvote}/>
         </div>
          <div className="postBottom">
           <div className="postBottomLeft">

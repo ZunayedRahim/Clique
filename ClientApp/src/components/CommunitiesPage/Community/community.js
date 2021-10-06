@@ -84,8 +84,8 @@ console.log(post.image_Url+"Getting?");
       
         </div>
         <div className="postTopDownC" >
-        <span className="postCommunity">
-              c/keeanureeves
+        <span className="postCommunityC">
+              c/{post.name}
               
             </span>
         </div>

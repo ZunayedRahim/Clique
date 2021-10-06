@@ -1,5 +1,5 @@
 import "./post.css";
-import { MoreVert } from "@material-ui/icons";
+import { MoreVert, PostAddTwoTone } from "@material-ui/icons";
 import profilepic from '../../../images/reaper.png';
 import { useState } from "react";
 import upvote from '../../../images/upvote.png';
@@ -9,13 +9,7 @@ import add from '../../../images/add.png';
 
 export default function Post( post ) {
   const history=useHistory();
-  const gotopost = async (e) =>{
-    e.preventDefault()
-    history.push("/InsidePost");
-   
-
-
-}
+  
 const gotologin = async (e) =>{
   e.preventDefault()
   history.push("/Signin");
@@ -39,21 +33,18 @@ const gotologin = async (e) =>{
               
             </span>
             
-            <span className="postDate"> 24 September,2021, 1:33pm</span>
+          
           </div>
           <div className="postTopRight">
-          <img
-              className="postProfileImg"
-              src={add}
-              alt=""
-              onClick={gotologin}
-            />
+          
           </div>
       
         </div>
-        <div className="postTopDown" onClick={gotopost}>
-        <span className="postCommunity">
-              c/keeanureeves
+        <div className="postTopDown" onClick={post.onClick}>
+        <span className="postDate"> {post.created_at}</span>
+        <br/>
+        <span className="postCommunityLanding">
+              c/{post.community_name}
               
             </span>
         </div>
@@ -70,7 +61,7 @@ const gotologin = async (e) =>{
             <span className="postLikeCounter">{post.downvote}</span>
           </div>
           <div className="postBottomRight">
-            <span className="postCommentText">{post.comment} comments</span>
+            <span className="postCommentTextLanding"> comments</span>
           </div>
         </div> 
       </div>

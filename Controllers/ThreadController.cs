@@ -70,22 +70,14 @@ namespace Clique.Controllers
         [Authorize]
         [HttpPost]
         [Route("add/{id}")] // id = community id
-        public string post([FromBody]Thread t, string id)
+        async public Task<ActionResult> post([FromForm]Thread t, string id)
         {
-            t.OP_id = _userId;
-            Console.WriteLine("model " + t.OP_id);
-
-            var user = userCollection.Find(x => x.Id == _userId).FirstOrDefault();
-            t.OP_name = user.Username;
-
-            var community = communityCollection.Find(x=>x.Id == id).FirstOrDefault();
-
-            t.Community_id = id;
-            t.Community_name = community.Name;
-            t.Thread_type = "public";
-
-            threadCollection.InsertOne(t);
-            return "Thank you for posting a new thread";
+             Payload res = await _blogService.CreateThread(t,id,_userId);
+            if (res.StatusCode != 200)
+            {
+                return new BadRequestObjectResult(new ErrorResult("Internal Server Error", 400, res.StatusDescription));
+            }
+            return Ok(res);
         }
 
         //Get inside a thread
@@ -105,6 +97,18 @@ namespace Clique.Controllers
                 return new BadRequestObjectResult(new ErrorResult("Internal Server Error", 400, "Something is wrong"));
             }
             return Ok(thread);
+        }
+
+
+        [HttpGet]
+        [Route("community/{communityId}")]
+
+         public IEnumerable<Thread> GetThreadFromCommunity(string communityid)
+        {
+
+            Console.WriteLine("uid:" + _userId);
+            var publicThread = threadCollection.Find(x => x.Community_id == communityid).ToList();
+            return publicThread;
         }
 
         // [Authorize]
@@ -206,7 +210,7 @@ namespace Clique.Controllers
             }
 
             var downvotedThread = threadCollection.Find(x => x.Id == v.PostId).FirstOrDefault();
-            var downvoteNumber = downvotedThread.Upvote;
+            var downvoteNumber = downvotedThread.Downvote;
             return downvoteNumber;
         }
 

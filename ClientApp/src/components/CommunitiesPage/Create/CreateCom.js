@@ -8,7 +8,10 @@ import {  useHistory } from 'react-router-dom'
 export default function CreateCom() {
     const history=useHistory();
     function createpost(){
-        history.push("/CreateCommunity")
+      localStorage.getItem("access_token") != null
+      ?(window.location.href="/CreateCommunity")
+      :(window.location.href="/Signin");
+       
 
     }
   return (

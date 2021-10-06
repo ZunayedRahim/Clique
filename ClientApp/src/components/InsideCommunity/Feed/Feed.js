@@ -37,6 +37,22 @@ console.log(id);
     exe();
   }, []);
 
+
+  useEffect(() => {
+    setLoading(false);
+    const exe = async () => {
+      try {
+        const{data} = await GET(`thread/community/${id}`);
+        console.log(data);
+        setPosts(data);
+        setLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    exe();
+  }, []);
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -50,6 +66,8 @@ console.log(id);
                     
                     name={community.name}
                     description={community.description}
+                    image_Url={community.image_Url}
+                    id={community.id}
                     
                     
                   />
@@ -61,11 +79,24 @@ console.log(id);
                     description={post.description}
                     upvote={post.upvote}
                     downvote={post.downvote}
-                    image={post.image}
+                    imageURL={post.imageURL}
+                    community_name={post.community_name}
+                    created_at={post.created_at}
+                    id={post.id}
+                    onClick = {()=>{
+                      localStorage.getItem("access_token") != null
+                      ?(window.location.href=`/InsidePost/${post.id}`)
+                      :(window.location.href="/Signin");
+                      
+                     
+                    }}
                     
                   />
                    ))} 
       </div>
+      
     </div>
+
+   
   );
 }

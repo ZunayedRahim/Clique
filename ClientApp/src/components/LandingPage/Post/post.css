@@ -23,14 +23,14 @@
   .postTopDown {
    
     align-items: center;
-    justify-content: space-between;
+    margin-left:40px;
     margin-top:-8px;
+    
   }
-  .postCommunity {
+  .postCommunityLanding {
     font-size: 12px;
     font-weight: 300;
-    margin-left:40px;
-    margin-bottom: 10px;
+    color: black;
   }
   
   .postTopLeft {
@@ -94,8 +94,8 @@
       font-size: 15px;
   }
   
-  .postCommentText{
+  .postCommentTextLanding{
       cursor: pointer;
-      border-bottom: 1px dashed gray;
+      
       font-size: 15px;
   }

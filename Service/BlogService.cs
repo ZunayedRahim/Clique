@@ -26,6 +26,9 @@ namespace Clique.Service
         List<Community> GetCommunitiesByCategory(string category);
         Task<Payload> CreateCommunity(Community community);
          Task<Community> GetCommunityById(string id);
+         Task<Payload> CreateThread(Thread thread, string id, string _userId);
+
+           //Task<Community> GetThreadFromCommunity(string communityid);
 
     }
     public class BlogService : IBlogService
@@ -42,6 +45,8 @@ namespace Clique.Service
         private readonly string _uploadCarePubKey;
         private readonly int _uploadCareExpiry;
 
+        // private readonly string _userId;
+
          public BlogService(IMongoClient client,IConfiguration config)
         {
             var db = client.GetDatabase("clique");
@@ -56,6 +61,9 @@ namespace Clique.Service
             _uploadCarePubKey = config["UploadCare:PubKey"];
             _uploadCareSecret = config["UploadCare:Secret"];
             _uploadCareExpiry = int.Parse(config["UploadCare:Expiry"]);
+
+            // IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
+            // _userId = (string)_httpContextAccessor.HttpContext.Items["UserId"];
            
         }
 
@@ -196,6 +204,55 @@ namespace Clique.Service
         }
 
 
+                 async public Task<Payload> CreateThread(Thread thread ,string id, string _userId)
+        {
+            try
+            {
+                Console.WriteLine(thread.CoverPhoto);
+                // Console.WriteLine( "Name " +community.Name);
+                // Console.WriteLine( "Mod id " +community.Moderator_id);
+                // Console.WriteLine( "mem " +community.Member_no);
+                // upload the image to the cloud bucket and then store the url
+                var res = await UploadImage(thread.CoverPhoto);
+                
+                if (res == null)
+                {
+                    return new Payload { StatusCode = 400, StatusDescription = "Couldn't upload image" };
+                }
+
+                thread.ImageURL = res.StatusDescription;
+                // setting the file field to null as we won't be saving the file directly in the database
+                thread.CoverPhoto = null;
+
+                thread.OP_id = _userId;
+               Console.WriteLine("model " + thread.OP_id);
+
+                   var user = _userCollection.Find(x => x.Id == _userId).FirstOrDefault();
+                 thread.OP_name = user.Username;
+
+                 var community = _communityCollection.Find(x=>x.Id == id).FirstOrDefault();
+
+            thread.Community_id = id;
+            thread.Community_name = community.Name;
+            thread.Thread_type = community.Category;
+
+                // insert the post into database
+                await _threadCollection.InsertOneAsync(thread);
+                return new Payload { StatusCode = 200, StatusDescription = "Thread created successfully." };
+
+            }
+             catch (Exception e)
+            {
+                Console.WriteLine(e);
+
+                return new Payload 
+                { StatusCode = 400,
+                 StatusDescription = e.Message 
+                };
+            }
+        }
+
+
         public async Task<Payload> UploadImage(IFormFile file)
         {
             string URL = $"https://upload.uploadcare.com/base/";
@@ -296,6 +353,50 @@ namespace Clique.Service
            
 
         }
+
+        
+
+
+        //         async public Task<Thread> GetThreadFromCommunity(string communityid)
+        // {
+        //     try
+        //     {
+        //         var filter = Builders<Thread>.Filter.Eq("CommunityId", communityid);
+        //         var projection = Builders<Thread>.Projection.
+        //             Include("title").
+        //             Include("description").
+        //             Include("created_at").
+        //             Include("community_id").
+        //             Include("community_name").
+        //             Include("upvote").
+        //             Include("downvote").
+        //             Include("image_src").
+        //             Include("thread_type");
+        //         Console.WriteLine("blogservice");
+        //         var result = await _communityCollection.Find(filter).Project(projection).FirstOrDefaultAsync();
+        //         Thread thread = BsonSerializer.Deserialize<Thread>(result);
+        //         // find the user name from the post author id
+        //         // var user = await _userCollection.Find(x => x.Id == community.id).FirstOrDefaultAsync();
+        //         // Console.WriteLine("blogservice");
+        //         // if (user == null)
+        //         // {
+        //         //     return null;
+        //         // }
+        //         // thread.OP_name = user.Username;
+
+        //         return thread;
+
+
+        //     } 
+        //    catch (Exception e)
+        //     {
+        //         Console.WriteLine(e);
+        //         return null;
+        //     }
+
+
+        // }
+
 
     }
 }

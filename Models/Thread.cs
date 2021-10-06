@@ -18,7 +18,7 @@ namespace Clique.Models
 
         [BsonElement("description")]
         public string Description { get; set; }
-        [BsonElement("image_src")]
+        [BsonElement("imageURL")]
         public string ImageURL { get; set; }
         [BsonElement("upvote")]
         public int Upvote { get; set; }
@@ -43,6 +43,9 @@ namespace Clique.Models
         public string Thread_type { get; set; }
         [BsonElement("created_at")]
         public DateTime Created_at { get; set; } = DateTime.UtcNow;
+
+        [BsonElement("coverphoto")]
+        public IFormFile CoverPhoto { get; set; } 
 
 
 

@@ -11,6 +11,7 @@ import { Link , useHistory} from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import profilepic from '../images/profilepic.png';
 import logo from '../images/clique_logo.PNG';
+import Topbar from "../../src/components/PrivatePages/Topbar/Topbar";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -75,64 +76,66 @@ const useStyles = makeStyles((theme) => ({
     }
 
   return(
+    <><>
+      <Topbar />
+      <div className="homeContainer">
+
+      </div>
+    </>
     <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-        <img src={logo} alt="Logo" />
-        <Typography variant="h3" component="h2" gutterBottom className={classes.signupstyle}>
-             User Profile
-        </Typography>
-
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
-        <TextField
-          onChange={(e) =>setUsername(e.target.value)}
-          variant="outlined"
-          margin="normal"
-          //required
-          fullWidth
-          //id="email"
-          label="Username"
-          name="username"
-          autoComplete="email"
-          autoFocus
-          error={usernameError}
-       
-        />
-        <TextField
-          onChange={(e) =>setEmail(e.target.value)}
-          variant="outlined"
-          margin="normal"
-          //required
-          readonly
-          fullWidth
-          //id="email"
-          label="Email Address"
+          <div className={classes.paper}>
           
-          name="email"
-         // autoComplete="email"
-          autoFocus
-          error={emailError}
-       
-        />
-        
-        <Button
-              type="edit"
-              fullWidth
-              variant="contained"
-              
-              className={classes.edit}
-            >
-              Edit
-            </Button>
+            <Typography variant="h3" component="h2" gutterBottom className={classes.userprofilestyle}>
+              User Profile
+            </Typography>
 
-         
-        
-        </form>
-        </div>
+            <form className={classes.form} noValidate onSubmit={handleSubmit}>
+              <TextField
+                onChange={(e) => setUsername(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                //required
+                fullWidth
+                //id="email"
+                label="Username"
+                name="username"
+                autoComplete="email"
+                autoFocus
+                error={usernameError} />
+              <TextField
+                onChange={(e) => setEmail(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                //required
+                readonly
+                fullWidth
+                //id="email"
+                label="Email Address"
+
+                name="email"
+                // autoComplete="email"
+                autoFocus
+                error={emailError} />
+
+              <Button
+                type="edit"
+                fullWidth
+                variant="contained"
+
+                className={classes.edit}
+              >
+                Edit
+              </Button>
+
+
+
+            </form>
+          </div>
         </Grid>
-    </Grid>
+      </Grid></>
 
 
 ) 

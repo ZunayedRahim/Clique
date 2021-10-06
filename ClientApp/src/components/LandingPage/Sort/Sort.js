@@ -13,7 +13,17 @@ export default function Sort() {
 
     }
 
+    const [newposts, setNewPosts] = React.useState([]);
+    const [topposts, setTopPosts] = React.useState([]);
    
+    function createpost(){
+        history.push("/SeeCommunities")
+
+    }
+    function gotocommunities(){
+        history.push("/SeeCommunities")
+
+    }
   return (
     <div className="share">
     <div className="shareWrapper">

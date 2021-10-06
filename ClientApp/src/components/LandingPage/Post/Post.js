@@ -40,8 +40,8 @@ const gotologin = async (e) =>{
           </div>
       
         </div>
-        <div className="postTopDown" onClick={post.onClick}>
-        <span className="postDate"> {post.created_at}</span>
+        <div className="postTopDownL" onClick={post.onClick}>
+        <span className="postDateP"> {post.created_at}</span>
         <br/>
         <span className="postCommunityLanding">
               c/{post.community_name}
